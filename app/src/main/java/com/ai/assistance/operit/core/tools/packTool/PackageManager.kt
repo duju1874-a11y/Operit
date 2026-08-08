@@ -71,7 +71,7 @@ private constructor(private val context: Context, private val aiToolHandler: AIT
         private const val SCRIPT_MARKET_ORIGIN_METADATA_KEY = "__operit_market_origin"
         private const val PACKAGES_DIR = "packages" // Directory for packages
         private const val ASSETS_PACKAGES_DIR = "packages" // Directory in assets for packages
-        private const val PACKAGE_PREFS = "com.ai.assistance.operit.core.tools.PackageManager"
+        private const val PACKAGE_PREFS = "com.operit.backup.core.tools.PackageManager"
         private const val ENABLED_PACKAGES_KEY = "imported_packages"
         private const val DISABLED_PACKAGES_KEY = "disabled_packages"
         private const val ACTIVE_PACKAGES_KEY = "active_packages"

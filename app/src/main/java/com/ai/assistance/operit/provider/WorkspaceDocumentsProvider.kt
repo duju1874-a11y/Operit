@@ -15,7 +15,7 @@ import java.io.FileNotFoundException
  * Workspace目录的DocumentsProvider
  * 
  * 通过Storage Access Framework暴露内部存储的workspace目录
- * 路径: /data/data/com.ai.assistance.operit/files/workspace
+ * 路径: /data/data/com.operit.backup/files/workspace
  */
 class WorkspaceDocumentsProvider : DocumentsProvider() {
     

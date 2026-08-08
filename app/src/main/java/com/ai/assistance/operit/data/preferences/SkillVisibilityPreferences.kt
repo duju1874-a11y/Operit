@@ -6,7 +6,7 @@ import java.security.MessageDigest
 class SkillVisibilityPreferences private constructor(private val context: Context) {
 
     companion object {
-        private const val PREFS_NAME = "com.ai.assistance.operit.data.preferences.SkillVisibilityPreferences"
+        private const val PREFS_NAME = "com.operit.backup.data.preferences.SkillVisibilityPreferences"
 
         @Volatile
         private var INSTANCE: SkillVisibilityPreferences? = null

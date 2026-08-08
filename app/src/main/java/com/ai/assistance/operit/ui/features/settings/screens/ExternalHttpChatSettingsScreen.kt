@@ -537,8 +537,8 @@ adb shell am broadcast \
     }
 }
 
-private const val EXTERNAL_CHAT_INTENT_ACTION = "com.ai.assistance.operit.EXTERNAL_CHAT"
-private const val EXTERNAL_CHAT_RESULT_ACTION = "com.ai.assistance.operit.EXTERNAL_CHAT_RESULT"
+private const val EXTERNAL_CHAT_INTENT_ACTION = "com.operit.backup.EXTERNAL_CHAT"
+private const val EXTERNAL_CHAT_RESULT_ACTION = "com.operit.backup.EXTERNAL_CHAT_RESULT"
 
 @Composable
 private fun SettingsCard(

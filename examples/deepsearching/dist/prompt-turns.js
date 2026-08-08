@@ -4,9 +4,9 @@ exports.createPromptTurn = createPromptTurn;
 exports.normalizePromptTurnList = normalizePromptTurnList;
 exports.toKotlinPromptTurnList = toKotlinPromptTurnList;
 exports.createSendMessageOptions = createSendMessageOptions;
-const PromptTurnClass = Java.type("com.ai.assistance.operit.core.chat.hooks.PromptTurn");
-const PromptTurnKindClass = Java.type("com.ai.assistance.operit.core.chat.hooks.PromptTurnKind");
-const SendMessageOptionsClass = Java.type("com.ai.assistance.operit.api.chat.EnhancedAIService$SendMessageOptions");
+const PromptTurnClass = Java.type("com.operit.backup.core.chat.hooks.PromptTurn");
+const PromptTurnKindClass = Java.type("com.operit.backup.core.chat.hooks.PromptTurnKind");
+const SendMessageOptionsClass = Java.type("com.operit.backup.api.chat.EnhancedAIService$SendMessageOptions");
 function createPromptTurn(kind, content, toolName, metadata) {
     const turn = {
         kind,

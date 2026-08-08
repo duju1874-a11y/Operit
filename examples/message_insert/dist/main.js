@@ -10,7 +10,7 @@ exports.onInputMenuToggle = onInputMenuToggle;
 const index_ui_js_1 = __importDefault(require("./ui/index.ui.js"));
 const shared_1 = require("./shared");
 const EnhancedAIService = Java.com.ai.assistance.operit.api.chat.EnhancedAIService;
-const InputProcessingStateBase = "com.ai.assistance.operit.data.model.InputProcessingState$";
+const InputProcessingStateBase = "com.operit.backup.data.model.InputProcessingState$";
 function resolveInjectionStatusText() {
     const locale = typeof getLang === "function" ? String(getLang() || "").trim().toLowerCase() : "";
     return locale.startsWith("en")

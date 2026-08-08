@@ -346,7 +346,7 @@ class AnrMonitor(
      */
     private fun analyzeStackTrace(stackTrace: String): String {
         val analysis = StringBuilder()
-        val targetPackage = "com.ai.assistance.operit"
+        val targetPackage = "com.operit.backup"
         val lines = mutableListOf<String>()
         
         for (line in stackTrace.lines()) {

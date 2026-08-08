@@ -99,10 +99,10 @@ class FloatingChatService : Service(), FloatingWindowCallback {
         @Volatile
         private var instance: FloatingChatService? = null
 
-        const val ACTION_FLOATING_CHAT_SERVICE_STARTED = "com.ai.assistance.operit.action.FLOATING_CHAT_SERVICE_STARTED"
-        const val ACTION_FLOATING_CHAT_SERVICE_STOPPED = "com.ai.assistance.operit.action.FLOATING_CHAT_SERVICE_STOPPED"
-        const val ACTION_FLOATING_CHAT_WINDOW_SHOWN = "com.ai.assistance.operit.action.FLOATING_CHAT_WINDOW_SHOWN"
-        const val ACTION_FLOATING_CHAT_WINDOW_SHOW_FAILED = "com.ai.assistance.operit.action.FLOATING_CHAT_WINDOW_SHOW_FAILED"
+        const val ACTION_FLOATING_CHAT_SERVICE_STARTED = "com.operit.backup.action.FLOATING_CHAT_SERVICE_STARTED"
+        const val ACTION_FLOATING_CHAT_SERVICE_STOPPED = "com.operit.backup.action.FLOATING_CHAT_SERVICE_STOPPED"
+        const val ACTION_FLOATING_CHAT_WINDOW_SHOWN = "com.operit.backup.action.FLOATING_CHAT_WINDOW_SHOWN"
+        const val ACTION_FLOATING_CHAT_WINDOW_SHOW_FAILED = "com.operit.backup.action.FLOATING_CHAT_WINDOW_SHOW_FAILED"
 
         const val EXTRA_AUTO_ENTER_VOICE_CHAT = "AUTO_ENTER_VOICE_CHAT"
         const val EXTRA_WAKE_LAUNCHED = "WAKE_LAUNCHED"

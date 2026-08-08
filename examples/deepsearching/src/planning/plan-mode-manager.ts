@@ -10,7 +10,7 @@ import { createPromptTurn, createSendMessageOptions, type PromptTurn } from "../
 
 const Unit = Java.kotlin.Unit;
 const EnhancedAIServiceClass = Java.com.ai.assistance.operit.api.chat.EnhancedAIService;
-const InputProcessingStateBase = "com.ai.assistance.operit.data.model.InputProcessingState$";
+const InputProcessingStateBase = "com.operit.backup.data.model.InputProcessingState$";
 
 const TAG = "PlanModeManager";
 
