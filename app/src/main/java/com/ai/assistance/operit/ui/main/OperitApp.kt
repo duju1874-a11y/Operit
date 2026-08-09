@@ -399,10 +399,11 @@ fun OperitApp(
 
         if (remoteAnnouncement != null) return@LaunchedEffect
 
-        val announcement = remoteAnnouncementRepository.fetchDisplayableAnnouncement()
-        if (announcement != null && remoteAnnouncementPreferences.shouldShow(announcement.version)) {
-            remoteAnnouncement = announcement
-        }
+        // 梅凝：个人私有应用，禁用远程公告拉取
+        // val announcement = remoteAnnouncementRepository.fetchDisplayableAnnouncement()
+        // if (announcement != null && remoteAnnouncementPreferences.shouldShow(announcement.version)) {
+        //     remoteAnnouncement = announcement
+        // }
     }
 
     // Get FPS counter display setting
