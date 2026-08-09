@@ -52,6 +52,8 @@ import com.ai.assistance.operit.ui.theme.MeiningDaiQing
 import com.ai.assistance.operit.ui.theme.MeiningGold
 import com.ai.assistance.operit.ui.theme.MeiningInk
 import com.ai.assistance.operit.ui.theme.MeiningMoonWhite
+import com.ai.assistance.operit.ui.theme.MeiningMountainBackground
+import androidx.compose.foundation.BorderStroke
 
 private data class MeiningToolEntry(val title: String, val icon: ImageVector, val screen: Screen)
 
@@ -65,24 +67,34 @@ fun ToolsHomeContent(navigateTo: (Screen) -> Unit) {
         MeiningToolEntry(stringResource(R.string.nav_workflow), Icons.Default.AccountTree, Screen.Workflow),
         MeiningToolEntry(stringResource(R.string.nav_assistant_config), Icons.Default.Tune, Screen.AssistantConfig),
     )
-    Column(
-        modifier = Modifier.fillMaxSize().background(MeiningMoonWhite).padding(16.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.nav_tools),
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = MeiningDaiQing,
-            modifier = Modifier.padding(vertical = 12.dp)
-        )
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+    Box(modifier = Modifier.fillMaxSize()) {
+        MeiningMountainBackground()
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp)
         ) {
-            items(entries) { entry ->
-                MeiningToolCard(entry = entry, onClick = { navigateTo(entry.screen) })
+            Text(
+                text = stringResource(R.string.nav_tools),
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = MeiningDaiQing
+            )
+            // 鎏金装饰线
+            Box(
+                modifier =
+                        Modifier.padding(top = 6.dp).size(width = 44.dp, height = 3.dp)
+                                .clip(RoundedCornerShape(2.dp))
+                                .background(MeiningGold.copy(alpha = 0.75f))
+            )
+            Spacer(modifier = Modifier.height(14.dp))
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(entries) { entry ->
+                    MeiningToolCard(entry = entry, onClick = { navigateTo(entry.screen) })
+                }
             }
         }
     }
@@ -93,7 +105,8 @@ private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
-        color = Color.White.copy(alpha = 0.9f),
+        color = Color.White.copy(alpha = 0.88f),
+        border = BorderStroke(1.dp, MeiningGold.copy(alpha = 0.45f)),
         shadowElevation = 2.dp
     ) {
         Column(
@@ -131,9 +144,11 @@ fun ProfileHomeContent(navigateTo: (Screen) -> Unit) {
         MeiningProfileEntry(stringResource(R.string.meining_privacy), Icons.Default.Settings, Screen.Settings),
         MeiningProfileEntry(stringResource(R.string.nav_about), Icons.Default.Info, Screen.About),
     )
-    Column(
-        modifier = Modifier.fillMaxSize().background(MeiningMoonWhite).verticalScroll(rememberScrollState())
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        MeiningMountainBackground()
+        Column(
+            modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
+        ) {
         // 顶部：头像 + 梅凝 + 副标题
         Column(
             modifier = Modifier.fillMaxWidth().background(MeiningDaiQing).padding(top = 28.dp, bottom = 24.dp),
@@ -189,7 +204,8 @@ private fun MeiningProfileRow(entry: MeiningProfileEntry, onClick: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = RoundedCornerShape(14.dp),
-        color = Color.White.copy(alpha = 0.9f),
+        color = Color.White.copy(alpha = 0.88f),
+        border = BorderStroke(1.dp, MeiningGold.copy(alpha = 0.45f)),
         shadowElevation = 1.dp
     ) {
         Row(
