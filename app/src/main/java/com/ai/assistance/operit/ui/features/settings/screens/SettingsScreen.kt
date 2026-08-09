@@ -87,48 +87,6 @@ fun SettingsScreen(
                         .padding(horizontal = 16.dp, vertical = 8.dp)
                         .verticalScroll(scrollState)
         ) {
-                // ======= 账号 =======
-                SettingsSection(
-                        title = stringResource(id = R.string.settings_section_account),
-                        icon = Icons.Default.AccountCircle,
-                        containerColor = cardContainerColor
-                ) {
-                        CompactSettingsItem(
-                                title = stringResource(R.string.github_account),
-                                subtitle = if (isGitHubLoggedIn && gitHubUser != null) {
-                                        "@${gitHubUser!!.login}"
-                                } else {
-                                        stringResource(R.string.github_account_not_logged_in)
-                                },
-                                icon = Icons.Default.Person,
-                                onClick = navigateToGitHubAccount
-                        )
-
-                        if (isGitHubLoggedIn) {
-                                CompactSettingsItem(
-                                        title = stringResource(R.string.logout),
-                                        subtitle = stringResource(R.string.github_account_logout_desc),
-                                        icon = Icons.Default.Logout,
-                                        onClick = {
-                                                scope.launch { githubAuth.logout() }
-                                        }
-                                )
-                        } else {
-                                CompactSettingsItem(
-                                        title = stringResource(R.string.login_github),
-                                        subtitle = stringResource(R.string.github_account_login_desc),
-                                        icon = Icons.Default.Login,
-                                        onClick = { showGitHubLogin = true }
-                                )
-                        }
-                }
-
-                if (showGitHubLogin) {
-                        GitHubLoginDialog(
-                                onDismissRequest = { showGitHubLogin = false }
-                        )
-                }
-
                 // ======= 个性化配置 =======
                 SettingsSection(
                         title = stringResource(id = R.string.settings_section_personalization),
@@ -220,14 +178,6 @@ fun SettingsScreen(
                                 icon = Icons.Default.Face,
                                 onClick = navigateToPersonaCardGeneration
                         )
-                        
-                        // 新增：Waifu模式设置
-                        CompactSettingsItem(
-                                title = stringResource(R.string.waifu_mode_settings),
-                                subtitle = stringResource(R.string.waifu_mode_settings_desc),
-                                icon = Icons.Default.EmojiEmotions,
-                                onClick = navigateToWaifuModeSettings
-                        )
                 }
 
                 // ======= 上下文和总结设置 =======
@@ -293,19 +243,7 @@ fun SettingsScreen(
                         )
                 }
 
-                // ======= 外部调用 =======
-                SettingsSection(
-                        title = stringResource(id = R.string.settings_section_external_calls),
-                        icon = Icons.Default.SettingsEthernet,
-                        containerColor = cardContainerColor
-                ) {
-                        CompactSettingsItem(
-                                title = stringResource(id = R.string.settings_external_http_chat),
-                                subtitle = stringResource(id = R.string.settings_external_http_chat_subtitle),
-                                icon = Icons.Default.SettingsEthernet,
-                                onClick = navigateToExternalHttpChatSettings
-                        )
-                }
+                // ======= 外部调用（已删除：梅凝不提供外部 HTTP 接口，避免暴露聊天服务） =======
 
                 // 底部间距
                 Spacer(modifier = Modifier.height(16.dp))
