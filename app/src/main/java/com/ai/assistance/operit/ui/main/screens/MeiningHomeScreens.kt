@@ -198,6 +198,7 @@ fun ProfileHomeContent(navigateTo: (Screen) -> Unit) {
         }
     }
 }
+}
 
 @Composable
 private fun MeiningProfileRow(entry: MeiningProfileEntry, onClick: () -> Unit) {
