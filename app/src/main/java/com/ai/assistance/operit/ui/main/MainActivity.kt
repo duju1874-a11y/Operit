@@ -746,28 +746,11 @@ class MainActivity : ComponentActivity() {
     }
 
     // ======== 设置更新管理器 ========
+    // 梅凝：禁用 Operit 更新检查（原功能会连接原作者 GitHub 仓库并提示"发现新版本"，
+    // 若点击下载会把梅凝覆盖回 Operit 官方版）。梅凝不再检查任何远程更新。
     private fun setupUpdateManager() {
-        // 获取UpdateManager实例
         updateManager = UpdateManager.getInstance(this)
-
-        // 观察更新状态（beta / 非 beta 都提示新版本）
-        updateManager.updateStatus.observe(
-            this,
-            Observer { status ->
-                when (status) {
-                    is UpdateStatus.Available -> showUpdateNotification(status.newVersion)
-                    is UpdateStatus.PatchAvailable -> showUpdateNotification(status.newVersion)
-                    else -> Unit
-                }
-            }
-        )
-
-        // 自动检查更新（仅提示，不自动下载）
-        lifecycleScope.launch {
-            // 延迟几秒，等待应用完全启动
-            delay(3000)
-            checkForUpdates()
-        }
+        // 更新检查已整体禁用：不注册观察者、不延迟检查、不弹更新提示
     }
 
     private fun checkForUpdates() {
