@@ -394,11 +394,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.operit.backup"
+        applicationId = "com.meining.ai"
         minSdk = 26
         targetSdk = 34
-        versionCode = 45
-        versionName = "1.12.0+9"
+        versionCode = 100
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -437,16 +437,16 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             signingConfig = signingConfigs.getByName("debug")
-            resValue("string", "app_name", "Operit Debug")
+            resValue("string", "app_name", "梅凝 Debug")
         }
         create("clone") {
             initWith(getByName("debug"))
-            applicationIdSuffix = ".clone"
+            applicationIdSuffix = ""
             if (releaseSigningConfig != null) {
                 signingConfig = releaseSigningConfig
             }
             matchingFallbacks += listOf("debug")
-            resValue("string", "app_name", "备用AI助手")
+            resValue("string", "app_name", "梅凝")
         }
         create("nightly") {
             isMinifyEnabled = false
