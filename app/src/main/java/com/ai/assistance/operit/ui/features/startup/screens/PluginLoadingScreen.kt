@@ -523,6 +523,11 @@ class PluginLoadingState {
     private val _isVisible = MutableStateFlow(false)
     val isVisible: StateFlow<Boolean> = _isVisible
 
+    // 梅凝：启动页最短显示时长，避免本地插件启动太快导致启动页一闪而过
+    private val minSplashDisplayMs = 1800L
+    private var splashShowTime = 0L
+    private var splashHideJob: Job? = null
+
     // 是否展开
     private val _isExpanded = MutableStateFlow(false)
     val isExpanded: StateFlow<Boolean> = _isExpanded
@@ -738,6 +743,8 @@ class PluginLoadingState {
 
     /** 显示加载屏幕 */
     fun show() {
+        splashHideJob?.cancel()
+        splashShowTime = System.currentTimeMillis()
         _isVisible.value = true
         _hasTimedOut.value = false
         // _isExpanded.value = true // 默认展开
@@ -746,8 +753,19 @@ class PluginLoadingState {
     /** 隐藏加载屏幕 */
     fun hide() {
         timeoutJob?.cancel()
-        _isVisible.value = false
-        // _isExpanded.value = false // 关闭时重置为折叠状态
+        // 梅凝：保证启动页至少显示 minSplashDisplayMs，避免一闪而过
+        val elapsed = System.currentTimeMillis() - splashShowTime
+        val remaining = minSplashDisplayMs - elapsed
+        if (remaining > 0) {
+            splashHideJob = kotlinx.coroutines.CoroutineScope(Dispatchers.Main).launch {
+                delay(remaining)
+                _isVisible.value = false
+                // _isExpanded.value = false // 关闭时重置为折叠状态
+            }
+        } else {
+            _isVisible.value = false
+            // _isExpanded.value = false // 关闭时重置为折叠状态
+        }
     }
 
     /** 重置所有状态 */
