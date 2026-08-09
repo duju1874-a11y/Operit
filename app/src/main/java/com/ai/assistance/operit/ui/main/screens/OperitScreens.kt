@@ -125,6 +125,36 @@ sealed class Screen(
     }
 
     // Main screens (primary)
+    // 梅凝：工具页（宫格入口）
+    data object Tools : Screen(navItem = NavItem.Tools, titleRes = R.string.nav_tools) {
+        @Composable
+        override fun Content(
+                navController: NavController,
+                navigateTo: ScreenNavigationHandler,
+                onGoBack: () -> Unit,
+                hasBackgroundImage: Boolean,
+                onLoading: (Boolean) -> Unit,
+                onError: (String) -> Unit,
+                onGestureConsumed: (Boolean) -> Unit
+        ) {
+            ToolsHomeContent(navigateTo = navigateTo)
+        }
+    }
+    // 梅凝：我的页（设置列表）
+    data object Profile : Screen(navItem = NavItem.Profile, titleRes = R.string.nav_profile) {
+        @Composable
+        override fun Content(
+                navController: NavController,
+                navigateTo: ScreenNavigationHandler,
+                onGoBack: () -> Unit,
+                hasBackgroundImage: Boolean,
+                onLoading: (Boolean) -> Unit,
+                onError: (String) -> Unit,
+                onGestureConsumed: (Boolean) -> Unit
+        ) {
+            ProfileHomeContent(navigateTo = navigateTo)
+        }
+    }
     data object AiChat : Screen(navItem = NavItem.AiChat) {
         @Composable
         override fun Content(
