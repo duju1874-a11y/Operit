@@ -55,6 +55,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import com.ai.assistance.operit.ui.theme.MeiningMoonWhite
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -138,6 +141,34 @@ fun PluginLoadingScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
+            // 顶部渐变遮罩，保证标题可读
+            Box(
+                modifier =
+                        Modifier.fillMaxWidth().height(340.dp).align(Alignment.TopCenter)
+                                .background(
+                                        Brush.verticalGradient(
+                                                listOf(Color(0xCC000000), Color(0x33000000), Color.Transparent)
+                                        )
+                                )
+            )
+            // 梅凝品牌标题
+            Column(
+                modifier = Modifier.align(Alignment.TopCenter).padding(top = 96.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                        text = stringResource(id = R.string.app_name),
+                        color = MeiningMoonWhite,
+                        fontSize = 46.sp,
+                        fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                        text = stringResource(id = R.string.meining_profile_subtitle),
+                        color = MeiningMoonWhite.copy(alpha = 0.9f),
+                        fontSize = 15.sp
+                )
+            }
             Box(
                 modifier = Modifier.fillMaxSize().padding(16.dp)
             ) {
