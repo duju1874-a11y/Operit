@@ -262,6 +262,9 @@ fun AppContent(
                                 Text(
                                     text =
                                     when {
+                                        // 梅凝：聊天页无自定义标题时默认显示“梅凝”
+                                        currentScreen is Screen.AiChat && customChatTitle.isNullOrEmpty() ->
+                                            stringResource(id = R.string.app_name)
                                         // 如果是AI对话界面且有自定义标题，则优先显示
                                         currentScreen is Screen.AiChat && !customChatTitle.isNullOrEmpty() ->
                                             customChatTitle!!
@@ -294,39 +297,26 @@ fun AppContent(
                         }
                     },
                     navigationIcon = {
-                        // 导航按钮逻辑
-                        IconButton(
-                            onClick = {
-                                if (canGoBack) {
-                                    onGoBack()
-                                } else {
-                                    // 平板模式下切换侧边栏展开/收起状态
-                                    if (useTabletLayout) {
-                                        onToggleSidebar()
-                                    } else {
-                                        // 手机模式下打开抽屉
-                                        scope.launch { drawerState.open() }
-                                    }
-                                }
+                        // 梅凝方案A：返回箭头（子页面）或平板侧边栏开关；手机顶层页面不显示导航按钮
+                        if (canGoBack) {
+                            IconButton(onClick = onGoBack) {
+                                Icon(
+                                    Icons.Default.ArrowBack,
+                                    contentDescription = stringResource(R.string.app_content_navigate_back),
+                                    tint = appBarContentColor
+                                )
                             }
-                        ) {
-                            Icon(
-                                if (canGoBack) Icons.Default.ArrowBack
-                                else if (useTabletLayout)
-                                // 平板模式下使用开关图标表示收起/展开
+                        } else if (useTabletLayout) {
+                            IconButton(onClick = onToggleSidebar) {
+                                Icon(
                                     if (isTabletSidebarExpanded) Icons.Filled.ChevronLeft
-                                    else Icons.Default.Menu
-                                else Icons.Default.Menu,
-                                contentDescription =
-                                when {
-                                    canGoBack -> stringResource(R.string.app_content_navigate_back)
-                                    useTabletLayout ->
-                                        if (isTabletSidebarExpanded) stringResource(R.string.app_content_collapse_sidebar)
-                                        else stringResource(R.string.app_content_expand_sidebar)
-                                    else -> stringResource(id = R.string.menu)
-                                },
-                                tint = appBarContentColor
-                            )
+                                    else Icons.Default.Menu,
+                                    contentDescription =
+                                    if (isTabletSidebarExpanded) stringResource(R.string.app_content_collapse_sidebar)
+                                    else stringResource(R.string.app_content_expand_sidebar),
+                                    tint = appBarContentColor
+                                )
+                            }
                         }
                     },
                     actions = actions,
