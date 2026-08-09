@@ -888,138 +888,13 @@ fun AboutScreen(
             }
 
             item {
-                val updateSubtitle = when (val status = updateStatus) {
-                    is UpdateStatus.Available -> context.getString(R.string.new_version, appVersion, status.newVersion)
-                    is UpdateStatus.PatchAvailable -> context.getString(R.string.new_version, appVersion, status.newVersion)
-                    is UpdateStatus.UpToDate -> context.getString(R.string.already_latest_version, appVersion)
-                    is UpdateStatus.Error -> status.message
-                    is UpdateStatus.Checking -> context.getString(R.string.checking_updates)
-                    else -> null
-                }
-
                 SettingsGroup {
-                    SettingsRow(
-                        icon = Icons.Default.Update,
-                        iconTint = MaterialTheme.colorScheme.primary,
-                        title = stringResource(id = R.string.check_for_updates),
-                        subtitleText = updateSubtitle,
-                        trailing = {
-                            if (updateStatus is UpdateStatus.Checking) {
-                                CircularProgressIndicator(
-                                    strokeWidth = 2.dp,
-                                    modifier = Modifier.size(18.dp)
-                                )
-                            } else {
-                                Icon(
-                                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            }
-                        },
-                        onClick = {
-                            when (updateStatus) {
-                                is UpdateStatus.Available,
-                                is UpdateStatus.PatchAvailable,
-                                is UpdateStatus.UpToDate,
-                                is UpdateStatus.Error -> showUpdateDialog = true
-                                is UpdateStatus.Checking -> Unit
-                                else -> checkForUpdates()
-                            }
-                        }
-                    )
-
-                    HorizontalDivider(modifier = Modifier.padding(start = 66.dp))
-
-                    SettingsRow(
-                        icon = Icons.Default.NewReleases,
-                        iconTint = MaterialTheme.colorScheme.tertiary,
-                        title = stringResource(id = R.string.beta_plan),
-                        subtitleText = stringResource(id = R.string.beta_plan_desc),
-                        trailing = {
-                            Switch(
-                                checked = betaEnabled,
-                                onCheckedChange = { enabled ->
-                                    scope.launch { preferences.saveBetaPlanEnabled(enabled) }
-                                }
-                            )
-                        }
-                    )
-                }
-            }
-
-            item {
-                SettingsGroup {
-                    SettingsRow(
-                        icon = Icons.Default.Language,
-                        iconTint = MaterialTheme.colorScheme.secondary,
-                        title = stringResource(id = R.string.project_url),
-                        subtitleText = GITHUB_PROJECT_URL,
-                        onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_PROJECT_URL)).apply {
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            }
-                            context.startActivity(intent)
-                        }
-                    )
-
-                    HorizontalDivider(modifier = Modifier.padding(start = 66.dp))
-
-                    SettingsRow(
-                        icon = Icons.Default.Star,
-                        iconTint = MaterialTheme.colorScheme.secondary,
-                        title = stringResource(id = R.string.star_on_github),
-                        onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(GITHUB_PROJECT_URL)).apply {
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            }
-                            context.startActivity(intent)
-                        }
-                    )
-
-                    HorizontalDivider(modifier = Modifier.padding(start = 66.dp))
-
-                    SettingsRow(
-                        icon = Icons.Default.History,
-                        iconTint = MaterialTheme.colorScheme.secondary,
-                        title = stringResource(R.string.update_log),
-                        onClick = { navigateToUpdateHistory() }
-                    )
-
-                    HorizontalDivider(modifier = Modifier.padding(start = 66.dp))
-
+                    // 梅凝：仅保留开源许可声明（LGPL-3.0 法律要求），已删除检查更新/Beta计划/项目地址/Star/更新日志/联系方式/开发者等 Operit 相关内容
                     SettingsRow(
                         icon = Icons.Default.Source,
                         iconTint = MaterialTheme.colorScheme.secondary,
                         title = stringResource(id = R.string.open_source_licenses),
                         onClick = { showLicenseDialog = true }
-                    )
-                }
-            }
-
-            item {
-                SettingsGroup {
-                    SettingsRow(
-                        icon = Icons.Default.Email,
-                        iconTint = MaterialTheme.colorScheme.primary,
-                        title = stringResource(id = R.string.contact),
-                        subtitleText = stringResource(id = R.string.about_contact)
-                    )
-
-                    HorizontalDivider(modifier = Modifier.padding(start = 66.dp))
-
-                    SettingsRow(
-                        icon = Icons.Default.Person,
-                        iconTint = MaterialTheme.colorScheme.primary,
-                        title = stringResource(id = R.string.developer),
-                        subtitleContent = {
-                            HtmlText(
-                                html = stringResource(id = R.string.about_developer),
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            )
-                        }
                     )
                 }
             }
