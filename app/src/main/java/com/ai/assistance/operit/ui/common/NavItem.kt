@@ -40,6 +40,8 @@ sealed class NavItem(val route: String, val titleResId: Int, val icon: ImageVect
                 NavItem("memory_base", R.string.nav_memory_base, Icons.Default.History)
         object Terminal : NavItem("terminal", R.string.terminal, Icons.Default.Terminal)
         object Toolbox : NavItem("toolbox", R.string.toolbox, Icons.Default.Apps)
+        object Tools : NavItem("tools", R.string.nav_tools, Icons.Default.Apps)
+        object Profile : NavItem("profile", R.string.nav_profile, Icons.Default.Person)
         object About : NavItem("about", R.string.nav_about, Icons.Default.Info)
         object Agreement :
                 NavItem("agreement", R.string.nav_item_agreement, Icons.Default.Description)
