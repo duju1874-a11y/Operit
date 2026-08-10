@@ -80,6 +80,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -235,13 +236,17 @@ fun UnifiedMarketScreen(
                         selectedTab = tab
                     },
                     icon = {
-                        Icon(
-                            imageVector = when (tab) {
-                                MarketHomeTab.ALL -> Icons.Default.Store
-                                MarketHomeTab.CATEGORIES -> Icons.Default.List
-                                MarketHomeTab.MINE -> Icons.Default.Person
-                            },
-                            contentDescription = stringResource(tab.labelRes)
+                        // 梅凝：市场 tab 使用古风素材（集市宝箱/玉牌/人物徽章）
+                        Image(
+                            painter = painterResource(
+                                when (tab) {
+                                    MarketHomeTab.ALL -> R.drawable.ic_nav_tools      // T041 金铜宝箱
+                                    MarketHomeTab.CATEGORIES -> R.drawable.ic_profile_memory // T047 人物记挂牌
+                                    MarketHomeTab.MINE -> R.drawable.ic_nav_profile    // T018 修仙男头像
+                                }
+                            ),
+                            contentDescription = stringResource(tab.labelRes),
+                            modifier = Modifier.size(22.dp)
                         )
                     },
                     label = null

@@ -2,6 +2,7 @@ package com.ai.assistance.operit.ui.features.toolbox.screens
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -18,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,6 +50,19 @@ data class Tool(
         val description: String? = null,
         val onClick: () -> Unit
 )
+
+// 梅凝：工具箱工具图标映射古风素材（按工具 id 语义匹配）
+private fun toolIconRes(id: String): Int? =
+        when {
+                id.contains("shellexecutor") || id.contains("terminal") -> R.drawable.ic_tool_terminal
+                id.contains("filemanager") || id.contains("file") -> R.drawable.ic_profile_memory
+                id.contains("ffmpeg") -> R.drawable.ic_tool_packages
+                id.contains("assistant") -> R.drawable.ic_avatar_meining_main
+                id.contains("process") -> R.drawable.ic_tool_assistant
+                id.contains("logcat") -> R.drawable.ic_tool_workflow
+                id.contains("html") -> R.drawable.ic_profile_about
+                else -> null
+        }
 
 /** 工具箱屏幕，展示可用的各种工具 */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -154,12 +169,22 @@ fun ToolCard(tool: Tool) {
                                                 )
                                                 .padding(8.dp)
                         ) {
+                                // 梅凝：工具图标优先使用古风素材，未映射的保留系统图标
+                        val iconRes = toolIconRes(tool.id)
+                        if (iconRes != null) {
+                                Image(
+                                        painter = painterResource(iconRes),
+                                        contentDescription = tool.name,
+                                        modifier = Modifier.size(28.dp)
+                                )
+                        } else {
                                 Icon(
                                         imageVector = tool.icon,
                                         contentDescription = tool.name,
                                         modifier = Modifier.size(24.dp),
                                         tint = MaterialTheme.colorScheme.primary
                                 )
+                        }
                         }
 
                         Text(
