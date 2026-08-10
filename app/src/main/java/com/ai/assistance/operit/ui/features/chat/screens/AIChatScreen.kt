@@ -35,6 +35,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -187,7 +190,9 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
     val enableEnterToSend by displayPreferencesManager.enableEnterToSend.collectAsState(initial = false)
     val showChatFloatingDotsAnimation = themeSnapshot.showChatFloatingDotsAnimation
     val hasBackgroundImageFromPrefs = useBackgroundImage && backgroundImageUri != null
-    val effectiveHasBackgroundImage = hasBackgroundImage || hasBackgroundImageFromPrefs
+    // 梅凝默认背景：用户未自定义背景时，聊天页使用内置山水背景 B013
+    val hasDefaultMeiningBg = !hasBackgroundImageFromPrefs
+    val effectiveHasBackgroundImage = hasBackgroundImage || hasBackgroundImageFromPrefs || hasDefaultMeiningBg
 
     // Collect chat style from preferences
     val chatStyleSetting = themeSnapshot.chatStyle
@@ -871,6 +876,15 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
         }
     val chatViewportTranslationYPx = inputBarTranslationYPx
     Box(modifier = Modifier.fillMaxSize()) {
+        // 梅凝默认聊天背景：未自定义背景时显示内置山水背景
+        if (hasDefaultMeiningBg) {
+            Image(
+                painter = painterResource(R.drawable.bg_chat_home),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
         CustomScaffold(
                 containerColor = Color.Transparent,
                 snackbarHost = { SnackbarHost(snackbarHostState) },

@@ -75,6 +75,8 @@ import com.ai.assistance.operit.ui.theme.liquidGlass
 import com.ai.assistance.operit.ui.theme.waterGlass
 import com.ai.assistance.operit.util.ChatUtils
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.Image
 import android.net.Uri
 
 @Composable
@@ -489,7 +491,7 @@ fun ClassicChatInputSection(
             ) {
                 // Input field (保持原有高度)
 
-                val classicInputShape = RoundedCornerShape(14.dp)
+                val classicInputShape = RoundedCornerShape(50.dp) // 胶囊输入框
                 val classicInputEnabled = !isProcessing || allowTextInputWhileProcessing
                 val classicInputBorderColor =
                     if (userMessage.text.isNotBlank()) {
@@ -632,11 +634,16 @@ fun ClassicChatInputSection(
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                // Send button (发送按钮) - 确保圆形
+                // Send button (发送按钮) / 语音按钮 - 梅凝素材：金色纸飞机 + 法印语音
+                val actionButtonSize =
+                    when {
+                        canSendMessage -> 40.dp
+                        else -> 46.dp // 语音模式：法印大按钮
+                    }
                 Box(
                     modifier =
                     Modifier
-                        .size(36.dp)
+                        .size(actionButtonSize)
                         .clip(CircleShape)
                         .background(
                             when {
@@ -646,17 +653,8 @@ fun ClassicChatInputSection(
                                         .error
                                 showQueueAction ->
                                     MaterialTheme.colorScheme.tertiary
-
-                                canSendMessage ->
-                                    if (isOverTokenLimit)
-                                        MaterialTheme.colorScheme.secondary // Warning color
-                                    else
-                                        MaterialTheme.colorScheme.primary
-
                                 else ->
-                                    MaterialTheme
-                                        .colorScheme
-                                        .primary
+                                    Color.Transparent // 素材自带圆形金框，无需背景
                             }
                         )
                         .clickable(
@@ -695,36 +693,34 @@ fun ClassicChatInputSection(
                         ),
                     contentAlignment = Alignment.Center
                 ) {
-                    val iconTint =
-                        when {
-                            showCancelAction -> MaterialTheme.colorScheme.onError
-                            showQueueAction -> MaterialTheme.colorScheme.onTertiary
-                            canSendMessage ->
-                                if (isOverTokenLimit)
-                                    MaterialTheme.colorScheme.onSecondary
-                                else
-                                    MaterialTheme.colorScheme.onPrimary
-
-                            else -> MaterialTheme.colorScheme.onPrimary
-                        }
-                    Icon(
-                        imageVector =
-                        when {
-                            showCancelAction -> Icons.Default.Close
-                            showQueueAction -> Icons.Default.Add
-                            canSendMessage -> Icons.AutoMirrored.Filled.Send
-                            else -> Icons.Default.Mic
-                        },
-                        contentDescription =
-                        when {
-                            showCancelAction -> context.getString(R.string.cancel)
-                            showQueueAction -> context.getString(R.string.chat_queue_add_message)
-                            canSendMessage -> context.getString(R.string.send)
-                            else -> context.getString(R.string.voice_input)
-                        },
-                        tint = iconTint,
-                        modifier = Modifier.size(18.dp)
-                    )
+                    when {
+                        showCancelAction ->
+                            Icon(
+                                imageVector = Icons.Default.Close,
+                                contentDescription = context.getString(R.string.cancel),
+                                tint = MaterialTheme.colorScheme.onError,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        showQueueAction ->
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = context.getString(R.string.chat_queue_add_message),
+                                tint = MaterialTheme.colorScheme.onTertiary,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        canSendMessage ->
+                            Image(
+                                painter = painterResource(R.drawable.ic_chat_send),
+                                contentDescription = context.getString(R.string.send),
+                                modifier = Modifier.size(40.dp)
+                            )
+                        else ->
+                            Image(
+                                painter = painterResource(R.drawable.ic_voice_fayin),
+                                contentDescription = context.getString(R.string.voice_input),
+                                modifier = Modifier.size(46.dp)
+                            )
+                    }
                 }
 
             }
