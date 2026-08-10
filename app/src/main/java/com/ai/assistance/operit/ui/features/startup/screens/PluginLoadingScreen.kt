@@ -134,9 +134,9 @@ fun PluginLoadingScreen(
         Box(
             modifier = modifier.fillMaxSize(),
         ) {
-            // 梅凝：启动页水墨背景
+            // 梅凝：首启欢迎页使用 B016 金色祥云双鹤云海背景
             Image(
-                painter = painterResource(id = R.drawable.meining_splash),
+                painter = painterResource(id = R.drawable.bg_welcome),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop

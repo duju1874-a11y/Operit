@@ -2,6 +2,7 @@ package com.ai.assistance.operit.ui.features.agreement.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,6 +12,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -35,11 +38,19 @@ fun AgreementScreen(onAgreementAccepted: () -> Unit) {
                 isButtonEnabled = true
         }
 
+        // 梅凝：协议弹窗使用 B009 宣纸金纹背景
+        Box(modifier = Modifier.fillMaxSize()) {
+        Image(
+                painter = painterResource(R.drawable.bg_agreement),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+        )
         Column(
                 modifier =
                         Modifier.fillMaxSize()
                                 .padding(16.dp)
-                                .background(MaterialTheme.colorScheme.background),
+                                .background(MaterialTheme.colorScheme.background.copy(alpha = 0.88f)),
                 horizontalAlignment = Alignment.CenterHorizontally
         ) {
                 Spacer(modifier = Modifier.height(24.dp))
@@ -182,5 +193,6 @@ fun AgreementScreen(onAgreementAccepted: () -> Unit) {
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
+        }
         }
 }

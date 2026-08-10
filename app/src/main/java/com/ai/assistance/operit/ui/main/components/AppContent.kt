@@ -39,6 +39,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -249,6 +250,20 @@ fun AppContent(
     ) {
         // 梅凝：保留外部传入的顶部操作按钮，聊天页额外叠加铜铃
         val originalTopBarActions = actions
+        // 梅凝：子页面统一水墨背景（聊天/工具/我的已自带背景，不在此处理）
+        val pageBgRes =
+            when (currentScreen) {
+                is Screen.MemoryBase -> R.drawable.bg_memory
+                is Screen.Packages -> R.drawable.bg_market
+                is Screen.Market -> R.drawable.bg_market
+                is Screen.Toolbox -> R.drawable.bg_toolbox
+                is Screen.AssistantConfig -> R.drawable.bg_assistant
+                is Screen.Workflow -> R.drawable.bg_workflow
+                is Screen.Terminal -> R.drawable.bg_terminal
+                is Screen.TerminalSetup -> R.drawable.bg_terminal
+                is Screen.TerminalAutoConfig -> R.drawable.bg_terminal
+                else -> null
+            }
         // 使用Scaffold来正确处理顶部栏和内容的布局
         // contentWindowInsets = WindowInsets(0) 让内容可以延伸到系统栏下方，使背景能够完全填充
         Scaffold(
@@ -378,9 +393,19 @@ fun AppContent(
                     )
                     .fillMaxSize(),
                 color =
-                if (hasBackgroundImage) Color.Transparent
+                if (hasBackgroundImage || pageBgRes != null) Color.Transparent
                 else MaterialTheme.colorScheme.background
             ) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    // 梅凝：子页面水墨背景
+                    if (pageBgRes != null) {
+                        Image(
+                            painter = painterResource(pageBgRes),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
                 if (isLoading) {
                     // 加载中状态
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -707,6 +732,7 @@ fun AppContent(
                             )
                         }
                     }
+                }
                 }
             }
         }
