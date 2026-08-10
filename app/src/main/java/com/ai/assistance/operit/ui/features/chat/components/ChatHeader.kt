@@ -24,6 +24,7 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.rememberAsyncImagePainter
+import androidx.compose.ui.res.painterResource
 
 private const val CHAT_HEADER_CHARACTER_NAME_MAX_LENGTH = 12
 
@@ -170,8 +171,11 @@ fun ChatHeader(
                                                 .background(MaterialTheme.colorScheme.secondaryContainer),
                                 contentAlignment = Alignment.Center
                         ) {
-                                // Use Coil or another image loader for activeCharacterAvatarUri
-                                if (activeCharacterAvatarUri != null) {
+                                // 梅凝：未自定义头像或仍为默认占位图时，使用内置古风头像 T013
+                                val isDefaultAvatar =
+                                        activeCharacterAvatarUri == null ||
+                                                activeCharacterAvatarUri.contains("operit.png")
+                                if (activeCharacterAvatarUri != null && !isDefaultAvatar) {
                                     Image(
                                         painter = rememberAsyncImagePainter(model = Uri.parse(activeCharacterAvatarUri)),
                                         contentDescription = "Character Avatar",
@@ -179,10 +183,11 @@ fun ChatHeader(
                                         contentScale = ContentScale.Crop
                                     )
                                 } else {
-                                    Icon(
-                                        Icons.Rounded.Person,
+                                    Image(
+                                        painter = painterResource(R.drawable.ic_avatar_meining_small),
                                         contentDescription = "Character Avatar",
-                                        modifier = Modifier.padding(4.dp)
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentScale = ContentScale.Crop
                                     )
                                 }
                         }

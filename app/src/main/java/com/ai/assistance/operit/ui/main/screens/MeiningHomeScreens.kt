@@ -1,5 +1,6 @@
 package com.ai.assistance.operit.ui.main.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,16 +22,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material.icons.filled.AccountTree
-import androidx.compose.material.icons.filled.Apps
-import androidx.compose.material.icons.filled.Extension
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Palette
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.SmartToy
-import androidx.compose.material.icons.filled.Terminal
-import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -40,7 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -52,23 +43,29 @@ import com.ai.assistance.operit.ui.theme.MeiningDaiQing
 import com.ai.assistance.operit.ui.theme.MeiningGold
 import com.ai.assistance.operit.ui.theme.MeiningInk
 import com.ai.assistance.operit.ui.theme.MeiningMoonWhite
-import com.ai.assistance.operit.ui.theme.MeiningMountainBackground
 import androidx.compose.foundation.BorderStroke
 
-private data class MeiningToolEntry(val title: String, val icon: ImageVector, val screen: Screen)
+// 梅凝工具页入口：图标使用素材包中的古风素材
+private data class MeiningToolEntry(val title: String, val iconRes: Int, val screen: Screen)
 
 @Composable
 fun ToolsHomeContent(navigateTo: (Screen) -> Unit) {
     val entries = listOf(
-        MeiningToolEntry(stringResource(R.string.tool_terminal), Icons.Default.Terminal, Screen.Terminal),
-        MeiningToolEntry(stringResource(R.string.nav_memory_base), Icons.Default.History, Screen.MemoryBase),
-        MeiningToolEntry(stringResource(R.string.nav_toolbox), Icons.Default.Apps, Screen.Toolbox),
-        MeiningToolEntry(stringResource(R.string.nav_packages), Icons.Default.Extension, Screen.Packages),
-        MeiningToolEntry(stringResource(R.string.nav_workflow), Icons.Default.AccountTree, Screen.Workflow),
-        MeiningToolEntry(stringResource(R.string.nav_assistant_config), Icons.Default.Tune, Screen.AssistantConfig),
+        MeiningToolEntry(stringResource(R.string.tool_terminal), R.drawable.ic_tool_terminal, Screen.Terminal),
+        MeiningToolEntry(stringResource(R.string.nav_memory_base), R.drawable.ic_tool_memory, Screen.MemoryBase),
+        MeiningToolEntry(stringResource(R.string.nav_toolbox), R.drawable.ic_tool_toolbox, Screen.Toolbox),
+        MeiningToolEntry(stringResource(R.string.nav_packages), R.drawable.ic_tool_packages, Screen.Packages),
+        MeiningToolEntry(stringResource(R.string.nav_workflow), R.drawable.ic_tool_workflow, Screen.Workflow),
+        MeiningToolEntry(stringResource(R.string.nav_assistant_config), R.drawable.ic_tool_assistant, Screen.AssistantConfig),
     )
     Box(modifier = Modifier.fillMaxSize()) {
-        MeiningMountainBackground()
+        // 梅凝：工具页使用 B006 淡墨山水背景
+        Image(
+            painter = painterResource(R.drawable.bg_tools),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp)
         ) {
@@ -114,10 +111,14 @@ private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
-                modifier = Modifier.size(52.dp).clip(RoundedCornerShape(14.dp)).background(MeiningDaiQing.copy(alpha = 0.12f)),
+                modifier = Modifier.size(54.dp).clip(RoundedCornerShape(14.dp)).background(MeiningDaiQing.copy(alpha = 0.10f)),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(entry.icon, contentDescription = entry.title, tint = MeiningDaiQing, modifier = Modifier.size(30.dp))
+                Image(
+                    painter = painterResource(entry.iconRes),
+                    contentDescription = entry.title,
+                    modifier = Modifier.size(40.dp)
+                )
             }
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -132,26 +133,33 @@ private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
     }
 }
 
-private data class MeiningProfileEntry(val title: String, val icon: ImageVector, val screen: Screen)
+// 梅凝我的页入口：图标使用素材包中的古风素材
+private data class MeiningProfileEntry(val title: String, val iconRes: Int, val screen: Screen)
 
 @Composable
 fun ProfileHomeContent(navigateTo: (Screen) -> Unit) {
     val items = listOf(
-        MeiningProfileEntry(stringResource(R.string.meining_model_config), Icons.Default.SmartToy, Screen.ModelConfig),
-        MeiningProfileEntry(stringResource(R.string.meining_theme_settings), Icons.Default.Palette, Screen.ThemeSettings),
-        MeiningProfileEntry(stringResource(R.string.nav_packages), Icons.Default.Extension, Screen.Packages),
-        MeiningProfileEntry(stringResource(R.string.meining_memory_data), Icons.Default.History, Screen.ChatHistorySettings),
-        MeiningProfileEntry(stringResource(R.string.meining_privacy), Icons.Default.Settings, Screen.Settings),
-        MeiningProfileEntry(stringResource(R.string.nav_about), Icons.Default.Info, Screen.About),
+        MeiningProfileEntry(stringResource(R.string.meining_model_config), R.drawable.ic_profile_model, Screen.ModelConfig),
+        MeiningProfileEntry(stringResource(R.string.meining_theme_settings), R.drawable.ic_profile_theme, Screen.ThemeSettings),
+        MeiningProfileEntry(stringResource(R.string.nav_packages), R.drawable.ic_profile_packages, Screen.Packages),
+        MeiningProfileEntry(stringResource(R.string.meining_memory_data), R.drawable.ic_profile_memory, Screen.ChatHistorySettings),
+        MeiningProfileEntry(stringResource(R.string.meining_privacy), R.drawable.ic_profile_privacy, Screen.Settings),
+        MeiningProfileEntry(stringResource(R.string.nav_about), R.drawable.ic_profile_about, Screen.About),
     )
     Box(modifier = Modifier.fillMaxSize()) {
-        MeiningMountainBackground()
+        // 梅凝：我的页使用 B014 群峰云海背景
+        Image(
+            painter = painterResource(R.drawable.bg_profile),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
         Column(
             modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
         ) {
-        // 顶部：头像 + 梅凝 + 副标题
+        // 顶部：梅凝古风头像 + 名字 + 副标题
         Column(
-            modifier = Modifier.fillMaxWidth().background(MeiningDaiQing).padding(top = 28.dp, bottom = 24.dp),
+            modifier = Modifier.fillMaxWidth().background(MeiningDaiQing.copy(alpha = 0.92f)).padding(top = 28.dp, bottom = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -163,8 +171,14 @@ fun ProfileHomeContent(navigateTo: (Screen) -> Unit) {
                     shape = CircleShape,
                     color = MeiningMoonWhite
                 ) {
-                    Box(modifier = Modifier.fillMaxSize().padding(6.dp), contentAlignment = Alignment.Center) {
-                        Icon(Icons.Default.SmartToy, contentDescription = null, tint = MeiningDaiQing, modifier = Modifier.size(52.dp))
+                    Box(modifier = Modifier.fillMaxSize().padding(2.dp), contentAlignment = Alignment.Center) {
+                        // 梅凝：古风女头像 T013
+                        Image(
+                            painter = painterResource(R.drawable.ic_avatar_meining_main),
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
                     }
                 }
             }
@@ -197,7 +211,7 @@ fun ProfileHomeContent(navigateTo: (Screen) -> Unit) {
             )
         }
     }
-}
+    }
 }
 
 @Composable
@@ -214,10 +228,14 @@ private fun MeiningProfileRow(entry: MeiningProfileEntry, onClick: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
-                modifier = Modifier.size(38.dp).clip(RoundedCornerShape(10.dp)).background(MeiningGold.copy(alpha = 0.18f)),
+                modifier = Modifier.size(40.dp).clip(RoundedCornerShape(10.dp)).background(MeiningGold.copy(alpha = 0.18f)),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(entry.icon, contentDescription = entry.title, tint = MeiningDaiQing, modifier = Modifier.size(22.dp))
+                Image(
+                    painter = painterResource(entry.iconRes),
+                    contentDescription = entry.title,
+                    modifier = Modifier.size(30.dp)
+                )
             }
             Spacer(modifier = Modifier.size(14.dp))
             Text(
@@ -227,7 +245,12 @@ private fun MeiningProfileRow(entry: MeiningProfileEntry, onClick: () -> Unit) {
                 color = MeiningInk,
                 modifier = Modifier.weight(1f)
             )
-            Icon(Icons.AutoMirrored.Filled.ArrowForwardIos, contentDescription = null, tint = MeiningGold, modifier = Modifier.size(16.dp))
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                contentDescription = null,
+                tint = MeiningGold,
+                modifier = Modifier.size(16.dp)
+            )
         }
     }
 }

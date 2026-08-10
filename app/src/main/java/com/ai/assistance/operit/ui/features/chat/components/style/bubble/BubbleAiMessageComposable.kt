@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -446,6 +447,8 @@ fun BubbleAiMessageComposable(
                                         enableLens = false,
                                     ),
                             shape = bubbleShape,
+// 梅凝：气泡鎏金描边
+                            border = BorderStroke(1.dp, com.ai.assistance.operit.ui.theme.MeiningGold.copy(alpha = 0.55f)),
                             color =
                                 if (liquidGlassEnabled || waterGlassEnabled) {
                                     Color.Transparent
@@ -655,6 +658,8 @@ fun BubbleAiMessageComposable(
                                         enableLens = false,
                                     ),
                             shape = bubbleShape,
+// 梅凝：气泡鎏金描边
+                            border = BorderStroke(1.dp, com.ai.assistance.operit.ui.theme.MeiningGold.copy(alpha = 0.55f)),
                             color =
                                 if (liquidGlassEnabled || waterGlassEnabled) {
                                     Color.Transparent

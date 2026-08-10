@@ -54,10 +54,10 @@ data class ThemePreferenceValues(
                     "background_media_type" to UserPreferencesManager.MEDIA_TYPE_IMAGE,
                     "app_bar_content_color_mode" to
                         UserPreferencesManager.APP_BAR_CONTENT_COLOR_MODE_LIGHT,
-                    "chat_style" to UserPreferencesManager.CHAT_STYLE_CURSOR,
+                    "chat_style" to UserPreferencesManager.CHAT_STYLE_BUBBLE,
                     "avatar_shape" to UserPreferencesManager.AVATAR_SHAPE_CIRCLE,
                     "on_color_mode" to UserPreferencesManager.ON_COLOR_MODE_AUTO,
-                    "input_style" to UserPreferencesManager.INPUT_STYLE_AGENT,
+                    "input_style" to UserPreferencesManager.INPUT_STYLE_CLASSIC,
                     "font_type" to UserPreferencesManager.FONT_TYPE_SYSTEM,
                     "system_font_name" to UserPreferencesManager.SYSTEM_FONT_DEFAULT,
                     "bubble_user_font_type" to UserPreferencesManager.FONT_TYPE_SYSTEM,
@@ -145,6 +145,11 @@ data class ThemePreferenceValues(
                     "bubble_content_padding_right" to 12f,
                     "bubble_ai_content_padding_left" to 12f,
                     "bubble_ai_content_padding_right" to 12f,
+                ),
+                ints = mapOf(
+                    // 梅凝：气泡默认配色（深青蓝用户 / 暖白AI）
+                    "bubble_user_bubble_color" to 0xFF2E5E63.toInt(),
+                    "bubble_ai_bubble_color" to 0xFFF5F0E6.toInt(),
                 ),
             )
     }

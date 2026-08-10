@@ -6,6 +6,7 @@ import android.content.ContextWrapper
 import android.content.pm.PackageManager
 import android.os.Build
 import android.view.WindowManager
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -19,6 +20,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ChevronLeft
@@ -38,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -244,6 +247,8 @@ fun AppContent(
     CompositionLocalProvider(
         LocalAppBarContentColor provides appBarContentColor,
     ) {
+        // 梅凝：保留外部传入的顶部操作按钮，聊天页额外叠加铜铃
+        val originalTopBarActions = actions
         // 使用Scaffold来正确处理顶部栏和内容的布局
         // contentWindowInsets = WindowInsets(0) 让内容可以延伸到系统栏下方，使背景能够完全填充
         Scaffold(
@@ -258,6 +263,15 @@ fun AppContent(
                             titleContent.content()
                         } else {
                             Row(verticalAlignment = Alignment.CenterVertically) {
+                                // 梅凝：聊天页标题左侧显示角色头像（T013）
+                                if (currentScreen is Screen.AiChat) {
+                                    Image(
+                                        painter = painterResource(R.drawable.ic_avatar_meining_main),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(6.dp))
+                                }
                                 // 使用Screen的标题或导航项的标题
                                 Text(
                                     text =
@@ -298,7 +312,8 @@ fun AppContent(
                     },
                     navigationIcon = {
                         // 梅凝方案A：返回箭头（子页面）或平板侧边栏开关；手机顶层页面不显示导航按钮
-                        if (canGoBack) {
+                        // 聊天页作为根页面，即使路由栈可弹也不显示返回键（对齐概念图）
+                        if (canGoBack && currentScreen !is Screen.AiChat) {
                             IconButton(onClick = onGoBack) {
                                 Icon(
                                     Icons.Default.ArrowBack,
@@ -319,7 +334,17 @@ fun AppContent(
                             }
                         }
                     },
-                    actions = actions,
+                    actions = {
+                        // 梅凝：聊天页顶部右侧显示金色铜铃（T034）
+                        if (currentScreen is Screen.AiChat) {
+                            Image(
+                                painter = painterResource(R.drawable.ic_bell_notify),
+                                contentDescription = null,
+                                modifier = Modifier.size(26.dp).padding(end = 6.dp)
+                            )
+                        }
+                        originalTopBarActions()
+                    },
                     colors =
                     TopAppBarDefaults.topAppBarColors(
                         containerColor =

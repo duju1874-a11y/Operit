@@ -2,6 +2,7 @@ package com.ai.assistance.operit.ui.main.layout
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,11 +22,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ai.assistance.operit.R
 import com.ai.assistance.operit.ui.common.NavItem
 import com.ai.assistance.operit.ui.main.NavigationTransitionSource
 import com.ai.assistance.operit.ui.main.TopBarTitleContent
@@ -137,36 +142,47 @@ private fun MeiningBottomBar(selectedIndex: Int, onSelect: (Int) -> Unit) {
                     MeiningTabItem(NavItem.Tools),
                     MeiningTabItem(NavItem.Profile),
             )
-    Surface(color = MeiningMoonWhite, shadowElevation = 8.dp) {
-        Row(
-                modifier =
-                        Modifier.fillMaxWidth().navigationBarsPadding().height(58.dp),
-                verticalAlignment = Alignment.CenterVertically
-        ) {
-            tabs.forEachIndexed { index, tab ->
-                val selected = index == selectedIndex
-                val title = stringResource(id = tab.navItem.titleResId)
-                Column(
-                        modifier =
-                                Modifier.weight(1f).fillMaxHeight()
-                                        .clickable { onSelect(index) },
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                ) {
-                    Icon(
-                            imageVector = tab.navItem.icon,
-                            contentDescription = title,
-                            tint = if (selected) MeiningGold else MeiningInk.copy(alpha = 0.55f),
-                            modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.height(2.dp))
-                    Text(
-                            text = title,
-                            style = MaterialTheme.typography.labelSmall,
-                            fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
-                            color = if (selected) MeiningDaiQing else MeiningInk.copy(alpha = 0.6f),
-                            fontSize = 11.sp
-                    )
+    // 概念图：深青蓝导航面板 + 金色分隔线 + 古风素材图标
+    Surface(color = MeiningDaiQing, shadowElevation = 8.dp) {
+        Column {
+            Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(MeiningGold.copy(alpha = 0.65f)))
+            Row(
+                    modifier =
+                            Modifier.fillMaxWidth().navigationBarsPadding().height(58.dp),
+                    verticalAlignment = Alignment.CenterVertically
+            ) {
+                tabs.forEachIndexed { index, tab ->
+                    val selected = index == selectedIndex
+                    val title = stringResource(id = tab.navItem.titleResId)
+                    val iconRes =
+                            when (tab.navItem) {
+                                NavItem.AiChat -> R.drawable.ic_nav_chat // T049 金色聊天气泡
+                                NavItem.Tools -> R.drawable.ic_nav_tools // T041 金铜宝箱
+                                else -> R.drawable.ic_nav_profile // T018 修仙男头像
+                            }
+                    Column(
+                            modifier =
+                                    Modifier.weight(1f).fillMaxHeight()
+                                            .clickable { onSelect(index) },
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.Center
+                    ) {
+                        Image(
+                                painter = painterResource(iconRes),
+                                contentDescription = title,
+                                modifier =
+                                        Modifier.size(if (selected) 26.dp else 22.dp)
+                                                .alpha(if (selected) 1f else 0.6f)
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                                text = title,
+                                style = MaterialTheme.typography.labelSmall,
+                                fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+                                color = if (selected) MeiningGold else Color.White.copy(alpha = 0.72f),
+                                fontSize = 11.sp
+                        )
+                    }
                 }
             }
         }

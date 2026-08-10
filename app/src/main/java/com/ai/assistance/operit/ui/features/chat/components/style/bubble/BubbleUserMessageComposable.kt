@@ -9,6 +9,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -461,6 +462,8 @@ fun BubbleUserMessageComposable(
                                         enableLens = false,
                                     ),
                             shape = bubbleShape,
+// 梅凝：气泡鎏金描边
+                            border = BorderStroke(1.dp, com.ai.assistance.operit.ui.theme.MeiningGold.copy(alpha = 0.55f)),
                             color =
                                 if (liquidGlassEnabled || waterGlassEnabled) {
                                     Color.Transparent
@@ -602,6 +605,8 @@ fun BubbleUserMessageComposable(
                                         enableLens = false,
                                     ),
                             shape = bubbleShape,
+// 梅凝：气泡鎏金描边
+                            border = BorderStroke(1.dp, com.ai.assistance.operit.ui.theme.MeiningGold.copy(alpha = 0.55f)),
                             color =
                                 if (liquidGlassEnabled || waterGlassEnabled) {
                                     Color.Transparent
