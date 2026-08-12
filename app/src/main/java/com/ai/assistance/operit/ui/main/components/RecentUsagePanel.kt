@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.unit.IntOffset
 import com.ai.assistance.operit.R
-import com.ai.assistance.operit.data.preferences.ChatHistoryManager
+import com.ai.assistance.operit.data.repository.ChatHistoryManager
 import com.ai.assistance.operit.ui.main.screens.Screen
 import com.ai.assistance.operit.ui.theme.MeiningDaiQing
 import com.ai.assistance.operit.ui.theme.MeiningGold

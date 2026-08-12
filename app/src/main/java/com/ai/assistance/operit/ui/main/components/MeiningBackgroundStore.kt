@@ -1,6 +1,7 @@
 package com.ai.assistance.operit.ui.main.components
 
 import android.content.Context
+import com.ai.assistance.operit.R
 import java.io.File
 
 /**
