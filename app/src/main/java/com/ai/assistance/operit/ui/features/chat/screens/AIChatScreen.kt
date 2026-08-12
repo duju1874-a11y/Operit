@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.draw.alpha
 import androidx.compose.foundation.Image
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
@@ -82,6 +83,8 @@ import com.ai.assistance.operit.ui.features.chat.viewmodel.ChatViewModel
 import com.ai.assistance.operit.ui.main.LocalTopBarActions
 import com.ai.assistance.operit.ui.main.PendingChatDraftHandler
 import com.ai.assistance.operit.ui.main.components.LocalAppBarContentColor
+import com.ai.assistance.operit.ui.main.components.MeiningBackgroundStore
+import com.ai.assistance.operit.ui.main.components.MeiningPageBackground
 import com.ai.assistance.operit.ui.main.screens.GestureStateHolder
 import com.ai.assistance.operit.ui.main.SharedFileHandler
 import java.io.File
@@ -799,23 +802,9 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
     LaunchedEffect(isCurrentScreen, showWebView, showAiComputer, isWorkspacePreparing, appBarContentColor, hasBoundWorkspace) {
         if (isCurrentScreen) {
             setTopBarActions {
-                // AI电脑模式切换按钮
-                IconButton(
-                        enabled = !isWorkspacePreparing,
-                        onClick = {
-                            actualViewModel.onAiComputerButtonClick()
-                        }
-                ) {
-                    Icon(
-                            imageVector = Icons.Default.Terminal,
-                            contentDescription = stringResource(R.string.ai_computer),
-                            tint =
-                            if (showAiComputer) MaterialTheme.colorScheme.primaryContainer
-                            else appBarContentColor
-                    )
-                }
+                // 梅凝：原"AI电脑模式"终端按钮已按需求移除（与工具页命令终端重复）
 
-                // Web开发模式切换按钮
+                // Web开发模式（工作区）切换按钮 - 梅凝：图标换为古风"灵"字挂牌素材 T072
                 IconButton(
                         enabled = !isWorkspacePreparing,
                         onClick = {
@@ -824,21 +813,19 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
                 ) {
                     if (isWorkspacePreparing) {
                         CircularProgressIndicator(
-                                modifier = Modifier.size(18.dp),
+                                modifier = Modifier.size(20.dp),
                                 strokeWidth = 2.dp,
                                 color = appBarContentColor
                         )
                     } else {
-                        Icon(
-                                imageVector =
-                                if (hasBoundWorkspace) Icons.Default.Code
-                                else Icons.Default.CodeOff,
+                        Image(
+                                painter = painterResource(R.drawable.ic_workspace),
                                 contentDescription =
                                 if (hasBoundWorkspace) stringResource(R.string.workspace)
                                 else stringResource(R.string.setup_workspace),
-                                tint =
-                                if (showWebView) MaterialTheme.colorScheme.primaryContainer
-                                else appBarContentColor
+                                modifier =
+                                Modifier.size(26.dp)
+                                        .alpha(if (showWebView) 1f else 0.75f)
                         )
                     }
                 }
@@ -876,13 +863,11 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
         }
     val chatViewportTranslationYPx = inputBarTranslationYPx
     Box(modifier = Modifier.fillMaxSize()) {
-        // 梅凝默认聊天背景：未自定义背景时显示内置山水背景
+        // 梅凝默认聊天背景：未自定义背景时显示内置山水背景（支持用户自定义）
         if (hasDefaultMeiningBg) {
-            Image(
-                painter = painterResource(R.drawable.bg_chat_home),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+            MeiningPageBackground(
+                pageKey = MeiningBackgroundStore.PAGE_CHAT,
+                defaultRes = R.drawable.bg_chat_home
             )
         }
         CustomScaffold(

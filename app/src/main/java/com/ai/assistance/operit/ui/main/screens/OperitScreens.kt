@@ -155,6 +155,38 @@ sealed class Screen(
             ProfileHomeContent(navigateTo = navigateTo)
         }
     }
+
+    // 梅凝：存储管理（工具页第 4 行入口）
+    data object StorageManage : Screen(titleRes = R.string.screen_title_storage_manage) {
+        @Composable
+        override fun Content(
+                navController: NavController,
+                navigateTo: ScreenNavigationHandler,
+                onGoBack: () -> Unit,
+                hasBackgroundImage: Boolean,
+                onLoading: (Boolean) -> Unit,
+                onError: (String) -> Unit,
+                onGestureConsumed: (Boolean) -> Unit
+        ) {
+            StorageManageScreen(onGoBack = onGoBack)
+        }
+    }
+
+    // 梅凝：背景头像设置（我的页"背景头像"入口）
+    data object BackgroundAvatar : Screen(titleRes = R.string.screen_title_background_avatar) {
+        @Composable
+        override fun Content(
+                navController: NavController,
+                navigateTo: ScreenNavigationHandler,
+                onGoBack: () -> Unit,
+                hasBackgroundImage: Boolean,
+                onLoading: (Boolean) -> Unit,
+                onError: (String) -> Unit,
+                onGestureConsumed: (Boolean) -> Unit
+        ) {
+            BackgroundAvatarScreen(onGoBack = onGoBack)
+        }
+    }
     data object AiChat : Screen(navItem = NavItem.AiChat) {
         @Composable
         override fun Content(

@@ -157,7 +157,8 @@ fun AppContent(
         onGoBack: () -> Unit,
         isNavigatingBack: Boolean = false,
         actions: @Composable RowScope.() -> Unit = {},
-        titleContent: TopBarTitleContent? = null
+        titleContent: TopBarTitleContent? = null,
+        onBellClick: () -> Unit = {}
 ) {
     // Get background image state
     val context = LocalContext.current
@@ -245,25 +246,30 @@ fun AppContent(
         }
     }
 
+// 梅凝：最近使用快捷面板显示状态（铜铃点击）
+    var showRecentPanel by remember { mutableStateOf(false) }
+    val recentPanelNavigator = remember { mutableStateOf<Screen?>(null) }
+
     CompositionLocalProvider(
         LocalAppBarContentColor provides appBarContentColor,
     ) {
         // 梅凝：保留外部传入的顶部操作按钮，聊天页额外叠加铜铃
         val originalTopBarActions = actions
-        // 梅凝：子页面统一水墨背景（聊天/工具/我的已自带背景，不在此处理）
-        val pageBgRes =
+        // 梅凝：子页面统一水墨背景（聊天/工具/我的已自带背景，不在此处理；支持自定义）
+        val pageBg =
             when (currentScreen) {
-                is Screen.MemoryBase -> R.drawable.bg_memory
-                is Screen.Packages -> R.drawable.bg_market
-                is Screen.Market -> R.drawable.bg_market
-                is Screen.Toolbox -> R.drawable.bg_toolbox
-                is Screen.AssistantConfig -> R.drawable.bg_assistant
-                is Screen.Workflow -> R.drawable.bg_workflow
-                is Screen.Terminal -> R.drawable.bg_terminal
-                is Screen.TerminalSetup -> R.drawable.bg_terminal
-                is Screen.TerminalAutoConfig -> R.drawable.bg_terminal
+                is Screen.MemoryBase -> MeiningBackgroundStore.PAGE_MEMORY to R.drawable.bg_memory
+                is Screen.Packages -> MeiningBackgroundStore.PAGE_MARKET to R.drawable.bg_market
+                is Screen.Market -> MeiningBackgroundStore.PAGE_MARKET to R.drawable.bg_market
+                is Screen.Toolbox -> MeiningBackgroundStore.PAGE_TOOLBOX to R.drawable.bg_toolbox
+                is Screen.AssistantConfig -> MeiningBackgroundStore.PAGE_ASSISTANT to R.drawable.bg_assistant
+                is Screen.Workflow -> MeiningBackgroundStore.PAGE_WORKFLOW to R.drawable.bg_workflow
+                is Screen.Terminal -> MeiningBackgroundStore.PAGE_TERMINAL to R.drawable.bg_terminal
+                is Screen.TerminalSetup -> MeiningBackgroundStore.PAGE_TERMINAL to R.drawable.bg_terminal
+                is Screen.TerminalAutoConfig -> MeiningBackgroundStore.PAGE_TERMINAL to R.drawable.bg_terminal
                 else -> null
             }
+        val pageBgRes = pageBg?.second
         // 使用Scaffold来正确处理顶部栏和内容的布局
         // contentWindowInsets = WindowInsets(0) 让内容可以延伸到系统栏下方，使背景能够完全填充
         Scaffold(
@@ -283,9 +289,9 @@ fun AppContent(
                                     Image(
                                         painter = painterResource(R.drawable.ic_avatar_meining_main),
                                         contentDescription = null,
-                                        modifier = Modifier.size(30.dp)
+                                        modifier = Modifier.size(40.dp)
                                     )
-                                    Spacer(modifier = Modifier.width(6.dp))
+                                    Spacer(modifier = Modifier.width(8.dp))
                                 }
                                 // 使用Screen的标题或导航项的标题
                                 Text(
@@ -350,13 +356,15 @@ fun AppContent(
                         }
                     },
                     actions = {
-                        // 梅凝：聊天页顶部右侧显示金色铜铃（T034）
+                        // 梅凝：聊天页顶部右侧显示金色铜铃（T034），点击打开最近使用快捷面板
                         if (currentScreen is Screen.AiChat) {
-                            Image(
-                                painter = painterResource(R.drawable.ic_bell_notify),
-                                contentDescription = null,
-                                modifier = Modifier.size(26.dp).padding(end = 6.dp)
-                            )
+                            IconButton(onClick = { showRecentPanel = !showRecentPanel }) {
+                                Image(
+                                    painter = painterResource(R.drawable.ic_bell_notify),
+                                    contentDescription = stringResource(R.string.app_name),
+                                    modifier = Modifier.size(36.dp)
+                                )
+                            }
                         }
                         originalTopBarActions()
                     },
@@ -397,13 +405,11 @@ fun AppContent(
                 else MaterialTheme.colorScheme.background
             ) {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    // 梅凝：子页面水墨背景
-                    if (pageBgRes != null) {
-                        Image(
-                            painter = painterResource(pageBgRes),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
+                    // 梅凝：子页面水墨背景（支持自定义）
+                    if (pageBg != null) {
+                        MeiningPageBackground(
+                            pageKey = pageBg.first,
+                            defaultRes = pageBg.second
                         )
                     }
                 if (isLoading) {
@@ -729,6 +735,17 @@ fun AppContent(
                                     .align(Alignment.TopEnd)
                                     .padding(top = 80.dp, end = 16.dp)
                                     .zIndex(2f)
+                            )
+                        }
+
+                        // 梅凝：铜铃"最近使用"快捷面板（仅聊天页）
+                        if (showRecentPanel && currentScreen is Screen.AiChat) {
+                            RecentUsagePanel(
+                                onDismiss = { showRecentPanel = false },
+                                onOpenTool = { screen ->
+                                    showRecentPanel = false
+                                    onScreenChange(screen)
+                                }
                             )
                         }
                     }

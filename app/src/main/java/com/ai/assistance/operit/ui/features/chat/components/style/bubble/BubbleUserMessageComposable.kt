@@ -376,7 +376,7 @@ fun BubbleUserMessageComposable(
                                 painter = rememberAsyncImagePainter(model = Uri.parse(avatarUri)),
                                 contentDescription = "User Avatar",
                                 modifier = Modifier
-                                    .size(32.dp)
+                                    .size(40.dp)
                                     .clip(avatarShape),
                                 contentScale = androidx.compose.ui.layout.ContentScale.Crop,
                             )
@@ -385,7 +385,7 @@ fun BubbleUserMessageComposable(
                                 imageVector = if (isProxySender) Icons.Default.Assistant else Icons.Default.Person,
                                 contentDescription = "User Avatar",
                                 modifier = Modifier
-                                    .size(32.dp)
+                                    .size(40.dp)
                                     .clip(avatarShape),
                                 tint = if (isProxySender) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary,
                             )
@@ -661,7 +661,7 @@ fun BubbleUserMessageComposable(
                         painter = rememberAsyncImagePainter(model = Uri.parse(avatarUri)),
                         contentDescription = "User Avatar",
                         modifier = Modifier
-                            .size(32.dp)
+                            .size(40.dp)
                             .clip(avatarShape),
                         contentScale = androidx.compose.ui.layout.ContentScale.Crop
                     )
@@ -670,7 +670,7 @@ fun BubbleUserMessageComposable(
                         imageVector = if (isProxySender) Icons.Default.Assistant else Icons.Default.Person,
                         contentDescription = "User Avatar",
                         modifier = Modifier
-                            .size(32.dp)
+                            .size(40.dp)
                             .clip(avatarShape),
                         tint = if (isProxySender) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary
                     )

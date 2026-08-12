@@ -269,7 +269,7 @@ fun BubbleAiMessageComposable(
         if (bubbleWideLayoutEnabled) {
         val headerVisible = bubbleShowAvatar || roleNameText.isNotEmpty() || metadataText.isNotEmpty()
         val avatarModifier = Modifier
-            .size(32.dp)
+            .size(40.dp)
             .clip(avatarShape)
             .combinedClickable(
                 onClick = {},

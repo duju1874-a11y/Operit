@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
 import com.ai.assistance.operit.R
+import com.ai.assistance.operit.ui.main.components.MeiningBackgroundStore
+import com.ai.assistance.operit.ui.main.components.MeiningPageBackground
 import com.ai.assistance.operit.data.preferences.AgreementPreferences
 import kotlinx.coroutines.delay
 
@@ -38,13 +40,11 @@ fun AgreementScreen(onAgreementAccepted: () -> Unit) {
                 isButtonEnabled = true
         }
 
-        // 梅凝：协议弹窗使用 B009 宣纸金纹背景
+        // 梅凝：协议弹窗使用 B009 宣纸金纹背景（支持自定义）
         Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-                painter = painterResource(R.drawable.bg_agreement),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+        MeiningPageBackground(
+                pageKey = MeiningBackgroundStore.PAGE_AGREEMENT,
+                defaultRes = R.drawable.bg_agreement
         )
         Column(
                 modifier =

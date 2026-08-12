@@ -2,6 +2,8 @@ package com.ai.assistance.operit.ui.features.startup.screens
 
 import android.content.Context
 import com.ai.assistance.operit.util.AppLogger
+import com.ai.assistance.operit.ui.main.components.MeiningBackgroundStore
+import com.ai.assistance.operit.ui.main.components.MeiningPageBackground
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -134,12 +136,10 @@ fun PluginLoadingScreen(
         Box(
             modifier = modifier.fillMaxSize(),
         ) {
-            // 梅凝：首启欢迎页使用 B016 金色祥云双鹤云海背景
-            Image(
-                painter = painterResource(id = R.drawable.bg_welcome),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+            // 梅凝：首启欢迎页使用 B016 金色祥云双鹤云海背景（支持自定义）
+            MeiningPageBackground(
+                pageKey = MeiningBackgroundStore.PAGE_WELCOME,
+                defaultRes = R.drawable.bg_welcome
             )
             // 顶部渐变遮罩，保证标题可读
             Box(
