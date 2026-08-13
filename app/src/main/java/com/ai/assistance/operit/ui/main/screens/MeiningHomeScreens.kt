@@ -155,10 +155,10 @@ private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
                         style = Stroke(width = 1.6.dp.toPx())
                     )
                 }
-                // 白色内嵌展示区
+                // 白色内嵌展示区（图标填满方框）
                 Box(
                     modifier = Modifier
-                        .size(72.dp)
+                        .size(74.dp)
                         .clip(RoundedCornerShape(20.dp))
                         .background(Color.White.copy(alpha = 0.94f))
                         .border(1.2.dp, MeiningGold.copy(alpha = 0.45f), RoundedCornerShape(20.dp)),
@@ -168,7 +168,7 @@ private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
                         painter = painterResource(entry.iconRes),
                         contentDescription = entry.title,
                         modifier = Modifier
-                            .size(60.dp)
+                            .fillMaxSize(0.92f)
                             .shadow(8.dp, RoundedCornerShape(14.dp), clip = false),
                         contentScale = ContentScale.Fit
                     )
@@ -311,7 +311,7 @@ private fun MeiningProfileRow(entry: MeiningProfileEntry, onClick: () -> Unit) {
                 }
                 Box(
                     modifier = Modifier
-                        .size(50.dp)
+                        .size(52.dp)
                         .clip(RoundedCornerShape(14.dp))
                         .background(Color.White.copy(alpha = 0.94f))
                         .border(1.2.dp, MeiningGold.copy(alpha = 0.45f), RoundedCornerShape(14.dp)),
@@ -321,7 +321,7 @@ private fun MeiningProfileRow(entry: MeiningProfileEntry, onClick: () -> Unit) {
                         painter = painterResource(entry.iconRes),
                         contentDescription = entry.title,
                         modifier = Modifier
-                            .size(42.dp)
+                            .fillMaxSize(0.92f)
                             .shadow(6.dp, RoundedCornerShape(12.dp), clip = false)
                     )
                 }

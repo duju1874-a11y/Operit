@@ -594,11 +594,11 @@ fun ClassicChatInputSection(
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                // Attachment button (+ 按钮) - 梅凝：放大至 48dp 与语音按钮水平对齐
+                // Attachment button (+ 按钮) - 梅凝：放大至 56dp 与语音按钮严格对齐
                 Box(
                     modifier =
                     Modifier
-                        .size(48.dp)
+                        .size(56.dp)
                         .clip(CircleShape)
                         .background(
                             if (showAttachmentPanel)
@@ -627,17 +627,17 @@ fun ClassicChatInputSection(
                         else
                             MaterialTheme.colorScheme
                                 .onSurfaceVariant,
-                        modifier = Modifier.size(26.dp)
+                        modifier = Modifier.size(32.dp)
                     )
                 }
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                // Send button (发送按钮) / 语音按钮 - 梅凝素材：金色纸飞机 + 法印语音（放大对齐）
+                // Send button (发送按钮) / 语音按钮 - 梅凝素材：金色纸飞机 + 法印语音（56dp 与 ➕ 对齐）
                 val actionButtonSize =
                     when {
-                        canSendMessage -> 48.dp
-                        else -> 52.dp // 语音模式：法印大按钮
+                        canSendMessage -> 56.dp
+                        else -> 56.dp // 语音模式：法印大按钮
                     }
                 Box(
                     modifier =
@@ -711,13 +711,13 @@ fun ClassicChatInputSection(
                             Image(
                                 painter = painterResource(R.drawable.ic_chat_send),
                                 contentDescription = context.getString(R.string.send),
-                                modifier = Modifier.size(48.dp)
+                                modifier = Modifier.size(54.dp)
                             )
                         else ->
                             Image(
                                 painter = painterResource(R.drawable.ic_voice_fayin),
                                 contentDescription = context.getString(R.string.voice_input),
-                                modifier = Modifier.size(52.dp)
+                                modifier = Modifier.size(56.dp)
                             )
                     }
                 }

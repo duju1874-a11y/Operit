@@ -2,6 +2,8 @@ package com.ai.assistance.operit.ui.features.settings.screens.theme
 
 import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -62,6 +64,7 @@ import com.ai.assistance.operit.data.preferences.DisplayPreferencesManager
 import com.ai.assistance.operit.data.preferences.UserPreferencesManager
 import com.ai.assistance.operit.ui.main.navigation.RegisterRouteBackGuard
 import com.ai.assistance.operit.util.AppLogger
+import java.io.File
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CoroutineScope
@@ -473,6 +476,31 @@ private fun ThemeSettingsTargetSelector(
     enabled: Boolean,
     onTargetSelected: (ActivePrompt) -> Unit,
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    // 梅凝：点击头像可从图库更换（QQ 风格，保存为全局用户头像）
+    val avatarPicker = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            scope.launch {
+                try {
+                    val input = context.contentResolver.openInputStream(uri)
+                    if (input != null) {
+                        val dest = File(context.filesDir, "meining_user_avatar.jpg")
+                        dest.outputStream().use { out -> input.copyTo(out) }
+                        DisplayPreferencesManager.getInstance(context).saveDisplaySettings(
+                            globalUserAvatarUri = Uri.fromFile(dest).toString()
+                        )
+                    }
+                } catch (_: Exception) {
+                }
+            }
+        }
+    }
+    // 梅凝：默认显示古风梅凝头像 T013（替换 Operit 默认 Q 版占位图）
+    val isDefaultAvatar = selectedAvatarUri.isNullOrEmpty() || selectedAvatarUri.contains("operit.png")
+    val displayAvatarUri = if (isDefaultAvatar) null else selectedAvatarUri
     var expanded by remember { mutableStateOf(false) }
     val targetTypeLabel = if (selectedTarget is ActivePrompt.CharacterGroup) {
         stringResource(R.string.theme_edit_target_group)
@@ -503,24 +531,26 @@ private fun ThemeSettingsTargetSelector(
                 Box(
                     modifier =
                         Modifier
-                            .size(44.dp)
+                            .size(56.dp)
                             .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.surfaceVariant),
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
+                            .clickable { avatarPicker.launch("image/*") },
                     contentAlignment = Alignment.Center,
                 ) {
-                    if (selectedAvatarUri != null) {
+                    if (displayAvatarUri != null) {
                         Image(
-                            painter = rememberAsyncImagePainter(Uri.parse(selectedAvatarUri)),
+                            painter = rememberAsyncImagePainter(Uri.parse(displayAvatarUri)),
                             contentDescription = stringResource(R.string.character_avatar),
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop,
                         )
                     } else {
-                        Icon(
-                            imageVector = targetIcon,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.size(24.dp),
+                        // 梅凝：默认显示古风梅凝头像 T013
+                        Image(
+                            painter = androidx.compose.ui.res.painterResource(R.drawable.ic_avatar_meining_main),
+                            contentDescription = stringResource(R.string.character_avatar),
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop,
                         )
                     }
                 }

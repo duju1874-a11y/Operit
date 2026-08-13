@@ -166,7 +166,7 @@ fun ChatHeader(
                         Box(
                                 modifier =
                                         Modifier
-                                                .size(36.dp)
+                                                .size(44.dp)
                                                 .clip(CircleShape)
                                                 .background(MaterialTheme.colorScheme.secondaryContainer),
                                 contentAlignment = Alignment.Center

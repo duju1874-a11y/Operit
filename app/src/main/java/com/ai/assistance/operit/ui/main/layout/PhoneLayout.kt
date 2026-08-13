@@ -148,7 +148,7 @@ private fun MeiningBottomBar(selectedIndex: Int, onSelect: (Int) -> Unit) {
             Box(modifier = Modifier.fillMaxWidth().height(1.dp).background(MeiningGold.copy(alpha = 0.65f)))
             Row(
                     modifier =
-                            Modifier.fillMaxWidth().navigationBarsPadding().height(66.dp),
+                            Modifier.fillMaxWidth().navigationBarsPadding().height(72.dp),
                     verticalAlignment = Alignment.CenterVertically
             ) {
                 tabs.forEachIndexed { index, tab ->
@@ -171,7 +171,7 @@ private fun MeiningBottomBar(selectedIndex: Int, onSelect: (Int) -> Unit) {
                                 painter = painterResource(iconRes),
                                 contentDescription = title,
                                 modifier =
-                                        Modifier.size(if (selected) 36.dp else 30.dp)
+                                        Modifier.size(if (selected) 46.dp else 40.dp)
                                                 .alpha(if (selected) 1f else 0.6f)
                         )
                         Spacer(modifier = Modifier.height(3.dp))
@@ -180,7 +180,7 @@ private fun MeiningBottomBar(selectedIndex: Int, onSelect: (Int) -> Unit) {
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
                                 color = if (selected) MeiningGold else Color.White.copy(alpha = 0.72f),
-                                fontSize = 12.sp
+                                fontSize = 13.sp
                         )
                     }
                 }
