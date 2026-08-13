@@ -1,8 +1,10 @@
 package com.ai.assistance.operit.ui.main.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +34,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -118,24 +124,55 @@ fun ToolsHomeContent(navigateTo: (Screen) -> Unit) {
 private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
-        shape = RoundedCornerShape(16.dp),
-        color = Color.White.copy(alpha = 0.88f),
-        border = BorderStroke(1.dp, MeiningGold.copy(alpha = 0.45f)),
-        shadowElevation = 2.dp
+        shape = RoundedCornerShape(20.dp),
+        color = Color.White.copy(alpha = 0.92f),
+        border = BorderStroke(1.5.dp, MeiningGold.copy(alpha = 0.55f)),
+        shadowElevation = 3.dp
     ) {
         Column(
             modifier = Modifier.padding(vertical = 20.dp, horizontal = 12.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // 梅凝：古典器物展示卡——浅灰绿底托 + 白色内嵌 + 金色笔刷圆环 + 光晕
             Box(
-                modifier = Modifier.size(72.dp).clip(RoundedCornerShape(18.dp)).background(MeiningDaiQing.copy(alpha = 0.10f)),
+                modifier = Modifier.size(78.dp).clip(RoundedCornerShape(20.dp)).background(MeiningDaiQing.copy(alpha = 0.10f)),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(entry.iconRes),
-                    contentDescription = entry.title,
-                    modifier = Modifier.size(58.dp)
-                )
+                // 金色笔刷圆环装饰
+                Canvas(modifier = Modifier.size(78.dp)) {
+                    val r = size.minDimension / 2f
+                    val c = center
+                    drawOval(
+                        color = MeiningGold.copy(alpha = 0.30f),
+                        topLeft = Offset(c.x - r * 0.78f, c.y - r * 0.52f),
+                        size = Size(r * 1.56f, r * 1.04f),
+                        style = Stroke(width = 2.2.dp.toPx())
+                    )
+                    drawOval(
+                        color = MeiningGold.copy(alpha = 0.18f),
+                        topLeft = Offset(c.x - r * 0.60f, c.y - r * 0.40f),
+                        size = Size(r * 1.20f, r * 0.80f),
+                        style = Stroke(width = 1.4.dp.toPx())
+                    )
+                }
+                // 白色内嵌展示区
+                Box(
+                    modifier = Modifier
+                        .size(58.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color.White.copy(alpha = 0.92f))
+                        .border(1.dp, MeiningGold.copy(alpha = 0.4f), RoundedCornerShape(16.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(entry.iconRes),
+                        contentDescription = entry.title,
+                        modifier = Modifier
+                            .size(46.dp)
+                            .shadow(6.dp, RoundedCornerShape(12.dp), clip = false),
+                        contentScale = ContentScale.Fit
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(12.dp))
             Text(
@@ -248,24 +285,46 @@ fun ProfileHomeContent(navigateTo: (Screen) -> Unit) {
 private fun MeiningProfileRow(entry: MeiningProfileEntry, onClick: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
-        shape = RoundedCornerShape(14.dp),
-        color = Color.White.copy(alpha = 0.88f),
-        border = BorderStroke(1.dp, MeiningGold.copy(alpha = 0.45f)),
-        shadowElevation = 1.dp
+        shape = RoundedCornerShape(16.dp),
+        color = Color.White.copy(alpha = 0.92f),
+        border = BorderStroke(1.5.dp, MeiningGold.copy(alpha = 0.5f)),
+        shadowElevation = 2.dp
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 15.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // 梅凝：古典器物展示——浅金底托 + 白色内嵌 + 金色圆环 + 光晕
             Box(
-                modifier = Modifier.size(52.dp).clip(RoundedCornerShape(12.dp)).background(MeiningGold.copy(alpha = 0.18f)),
+                modifier = Modifier.size(54.dp).clip(RoundedCornerShape(14.dp)).background(MeiningGold.copy(alpha = 0.16f)),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(entry.iconRes),
-                    contentDescription = entry.title,
-                    modifier = Modifier.size(42.dp)
-                )
+                Canvas(modifier = Modifier.size(54.dp)) {
+                    val r = size.minDimension / 2f
+                    val c = center
+                    drawOval(
+                        color = MeiningGold.copy(alpha = 0.30f),
+                        topLeft = Offset(c.x - r * 0.80f, c.y - r * 0.50f),
+                        size = Size(r * 1.60f, r * 1.00f),
+                        style = Stroke(width = 1.8.dp.toPx())
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.White.copy(alpha = 0.94f))
+                        .border(1.dp, MeiningGold.copy(alpha = 0.4f), RoundedCornerShape(12.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(entry.iconRes),
+                        contentDescription = entry.title,
+                        modifier = Modifier
+                            .size(34.dp)
+                            .shadow(5.dp, RoundedCornerShape(10.dp), clip = false)
+                    )
+                }
             }
             Spacer(modifier = Modifier.size(14.dp))
             Text(
