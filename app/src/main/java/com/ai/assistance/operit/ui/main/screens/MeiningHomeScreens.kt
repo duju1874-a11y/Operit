@@ -133,48 +133,48 @@ private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
             modifier = Modifier.padding(vertical = 20.dp, horizontal = 12.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // 梅凝：古典器物展示卡——浅灰绿底托 + 白色内嵌 + 金色笔刷圆环 + 光晕
+            // 梅凝：古典器物展示卡——浅灰绿底托 + 白色内嵌 + 金色笔刷圆环 + 光晕（大尺寸）
             Box(
-                modifier = Modifier.size(78.dp).clip(RoundedCornerShape(20.dp)).background(MeiningDaiQing.copy(alpha = 0.10f)),
+                modifier = Modifier.size(96.dp).clip(RoundedCornerShape(24.dp)).background(MeiningDaiQing.copy(alpha = 0.10f)),
                 contentAlignment = Alignment.Center
             ) {
                 // 金色笔刷圆环装饰
-                Canvas(modifier = Modifier.size(78.dp)) {
+                Canvas(modifier = Modifier.size(96.dp)) {
                     val r = size.minDimension / 2f
                     val c = center
                     drawOval(
                         color = MeiningGold.copy(alpha = 0.30f),
-                        topLeft = Offset(c.x - r * 0.78f, c.y - r * 0.52f),
-                        size = Size(r * 1.56f, r * 1.04f),
-                        style = Stroke(width = 2.2.dp.toPx())
+                        topLeft = Offset(c.x - r * 0.82f, c.y - r * 0.56f),
+                        size = Size(r * 1.64f, r * 1.12f),
+                        style = Stroke(width = 2.6.dp.toPx())
                     )
                     drawOval(
                         color = MeiningGold.copy(alpha = 0.18f),
-                        topLeft = Offset(c.x - r * 0.60f, c.y - r * 0.40f),
-                        size = Size(r * 1.20f, r * 0.80f),
-                        style = Stroke(width = 1.4.dp.toPx())
+                        topLeft = Offset(c.x - r * 0.62f, c.y - r * 0.42f),
+                        size = Size(r * 1.24f, r * 0.84f),
+                        style = Stroke(width = 1.6.dp.toPx())
                     )
                 }
                 // 白色内嵌展示区
                 Box(
                     modifier = Modifier
-                        .size(58.dp)
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(Color.White.copy(alpha = 0.92f))
-                        .border(1.dp, MeiningGold.copy(alpha = 0.4f), RoundedCornerShape(16.dp)),
+                        .size(72.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .background(Color.White.copy(alpha = 0.94f))
+                        .border(1.2.dp, MeiningGold.copy(alpha = 0.45f), RoundedCornerShape(20.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = painterResource(entry.iconRes),
                         contentDescription = entry.title,
                         modifier = Modifier
-                            .size(46.dp)
-                            .shadow(6.dp, RoundedCornerShape(12.dp), clip = false),
+                            .size(60.dp)
+                            .shadow(8.dp, RoundedCornerShape(14.dp), clip = false),
                         contentScale = ContentScale.Fit
                     )
                 }
             }
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(14.dp))
             Text(
                 text = entry.title,
                 style = MaterialTheme.typography.bodyMedium,
@@ -182,7 +182,7 @@ private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
                 color = MeiningInk,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                fontSize = 16.sp
+                fontSize = 17.sp
             )
         }
     }
@@ -294,35 +294,35 @@ private fun MeiningProfileRow(entry: MeiningProfileEntry, onClick: () -> Unit) {
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 梅凝：古典器物展示——浅金底托 + 白色内嵌 + 金色圆环 + 光晕
+            // 梅凝：古典器物展示——浅金底托 + 白色内嵌 + 金色圆环 + 光晕（大尺寸）
             Box(
-                modifier = Modifier.size(54.dp).clip(RoundedCornerShape(14.dp)).background(MeiningGold.copy(alpha = 0.16f)),
+                modifier = Modifier.size(64.dp).clip(RoundedCornerShape(16.dp)).background(MeiningGold.copy(alpha = 0.16f)),
                 contentAlignment = Alignment.Center
             ) {
-                Canvas(modifier = Modifier.size(54.dp)) {
+                Canvas(modifier = Modifier.size(64.dp)) {
                     val r = size.minDimension / 2f
                     val c = center
                     drawOval(
                         color = MeiningGold.copy(alpha = 0.30f),
-                        topLeft = Offset(c.x - r * 0.80f, c.y - r * 0.50f),
-                        size = Size(r * 1.60f, r * 1.00f),
-                        style = Stroke(width = 1.8.dp.toPx())
+                        topLeft = Offset(c.x - r * 0.82f, c.y - r * 0.52f),
+                        size = Size(r * 1.64f, r * 1.04f),
+                        style = Stroke(width = 2.0.dp.toPx())
                     )
                 }
                 Box(
                     modifier = Modifier
-                        .size(42.dp)
-                        .clip(RoundedCornerShape(12.dp))
+                        .size(50.dp)
+                        .clip(RoundedCornerShape(14.dp))
                         .background(Color.White.copy(alpha = 0.94f))
-                        .border(1.dp, MeiningGold.copy(alpha = 0.4f), RoundedCornerShape(12.dp)),
+                        .border(1.2.dp, MeiningGold.copy(alpha = 0.45f), RoundedCornerShape(14.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = painterResource(entry.iconRes),
                         contentDescription = entry.title,
                         modifier = Modifier
-                            .size(34.dp)
-                            .shadow(5.dp, RoundedCornerShape(10.dp), clip = false)
+                            .size(42.dp)
+                            .shadow(6.dp, RoundedCornerShape(12.dp), clip = false)
                     )
                 }
             }
