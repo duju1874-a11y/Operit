@@ -824,7 +824,7 @@ val actualViewModel: ChatViewModel = viewModel ?: viewModel { ChatViewModel(cont
                                 if (hasBoundWorkspace) stringResource(R.string.workspace)
                                 else stringResource(R.string.setup_workspace),
                                 modifier =
-                                Modifier.size(36.dp)
+                                Modifier.size(56.dp)
                                         .alpha(if (showWebView) 1f else 0.75f)
                         )
                     }

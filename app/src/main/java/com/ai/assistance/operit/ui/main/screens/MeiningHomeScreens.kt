@@ -124,56 +124,24 @@ fun ToolsHomeContent(navigateTo: (Screen) -> Unit) {
 private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
     Surface(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
-        shape = RoundedCornerShape(20.dp),
-        color = Color.White.copy(alpha = 0.92f),
-        border = BorderStroke(1.5.dp, MeiningGold.copy(alpha = 0.55f)),
+        shape = RoundedCornerShape(18.dp),
+        color = Color.White.copy(alpha = 0.9f),
+        border = BorderStroke(1.2.dp, MeiningGold.copy(alpha = 0.5f)),
         shadowElevation = 3.dp
     ) {
         Column(
-            modifier = Modifier.padding(vertical = 20.dp, horizontal = 12.dp).fillMaxWidth(),
+            modifier = Modifier.padding(vertical = 18.dp, horizontal = 12.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // 梅凝：古典器物展示卡——浅灰绿底托 + 白色内嵌 + 金色笔刷圆环 + 光晕（大尺寸）
-            Box(
-                modifier = Modifier.size(96.dp).clip(RoundedCornerShape(24.dp)).background(MeiningDaiQing.copy(alpha = 0.10f)),
-                contentAlignment = Alignment.Center
-            ) {
-                // 金色笔刷圆环装饰
-                Canvas(modifier = Modifier.size(96.dp)) {
-                    val r = size.minDimension / 2f
-                    val c = center
-                    drawOval(
-                        color = MeiningGold.copy(alpha = 0.30f),
-                        topLeft = Offset(c.x - r * 0.82f, c.y - r * 0.56f),
-                        size = Size(r * 1.64f, r * 1.12f),
-                        style = Stroke(width = 2.6.dp.toPx())
-                    )
-                    drawOval(
-                        color = MeiningGold.copy(alpha = 0.18f),
-                        topLeft = Offset(c.x - r * 0.62f, c.y - r * 0.42f),
-                        size = Size(r * 1.24f, r * 0.84f),
-                        style = Stroke(width = 1.6.dp.toPx())
-                    )
-                }
-                // 白色内嵌展示区（图标填满方框）
-                Box(
-                    modifier = Modifier
-                        .size(74.dp)
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(Color.White.copy(alpha = 0.94f))
-                        .border(1.2.dp, MeiningGold.copy(alpha = 0.45f), RoundedCornerShape(20.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(entry.iconRes),
-                        contentDescription = entry.title,
-                        modifier = Modifier
-                            .fillMaxSize(0.92f)
-                            .shadow(8.dp, RoundedCornerShape(14.dp), clip = false),
-                        contentScale = ContentScale.Fit
-                    )
-                }
-            }
+            // 梅凝：只留图标实体（无底托/内嵌/装饰框），图标大尺寸
+            Image(
+                painter = painterResource(entry.iconRes),
+                contentDescription = entry.title,
+                modifier = Modifier
+                    .size(72.dp)
+                    .shadow(6.dp, RoundedCornerShape(14.dp), clip = false),
+                contentScale = ContentScale.Fit
+            )
             Spacer(modifier = Modifier.height(14.dp))
             Text(
                 text = entry.title,
@@ -182,7 +150,7 @@ private fun MeiningToolCard(entry: MeiningToolEntry, onClick: () -> Unit) {
                 color = MeiningInk,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                fontSize = 17.sp
+                fontSize = 16.sp
             )
         }
     }
@@ -287,46 +255,22 @@ private fun MeiningProfileRow(entry: MeiningProfileEntry, onClick: () -> Unit) {
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
         color = Color.White.copy(alpha = 0.92f),
-        border = BorderStroke(1.5.dp, MeiningGold.copy(alpha = 0.5f)),
+        border = BorderStroke(1.2.dp, MeiningGold.copy(alpha = 0.5f)),
         shadowElevation = 2.dp
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 梅凝：古典器物展示——浅金底托 + 白色内嵌 + 金色圆环 + 光晕（大尺寸）
-            Box(
-                modifier = Modifier.size(64.dp).clip(RoundedCornerShape(16.dp)).background(MeiningGold.copy(alpha = 0.16f)),
-                contentAlignment = Alignment.Center
-            ) {
-                Canvas(modifier = Modifier.size(64.dp)) {
-                    val r = size.minDimension / 2f
-                    val c = center
-                    drawOval(
-                        color = MeiningGold.copy(alpha = 0.30f),
-                        topLeft = Offset(c.x - r * 0.82f, c.y - r * 0.52f),
-                        size = Size(r * 1.64f, r * 1.04f),
-                        style = Stroke(width = 2.0.dp.toPx())
-                    )
-                }
-                Box(
-                    modifier = Modifier
-                        .size(52.dp)
-                        .clip(RoundedCornerShape(14.dp))
-                        .background(Color.White.copy(alpha = 0.94f))
-                        .border(1.2.dp, MeiningGold.copy(alpha = 0.45f), RoundedCornerShape(14.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(entry.iconRes),
-                        contentDescription = entry.title,
-                        modifier = Modifier
-                            .fillMaxSize(0.92f)
-                            .shadow(6.dp, RoundedCornerShape(12.dp), clip = false)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.size(14.dp))
+            // 梅凝：只留图标实体（无底托/内嵌/装饰框）
+            Image(
+                painter = painterResource(entry.iconRes),
+                contentDescription = entry.title,
+                modifier = Modifier
+                    .size(52.dp)
+                    .shadow(4.dp, RoundedCornerShape(12.dp), clip = false)
+            )
+            Spacer(modifier = Modifier.size(16.dp))
             Text(
                 text = entry.title,
                 style = MaterialTheme.typography.bodyLarge,

@@ -362,7 +362,7 @@ fun AppContent(
                                 Image(
                                     painter = painterResource(R.drawable.ic_bell_notify),
                                     contentDescription = stringResource(R.string.app_name),
-                                    modifier = Modifier.size(44.dp)
+                                    modifier = Modifier.size(56.dp)
                                 )
                             }
                         }

@@ -171,7 +171,7 @@ private fun MeiningBottomBar(selectedIndex: Int, onSelect: (Int) -> Unit) {
                                 painter = painterResource(iconRes),
                                 contentDescription = title,
                                 modifier =
-                                        Modifier.size(if (selected) 46.dp else 40.dp)
+                                        Modifier.size(if (selected) 64.dp else 58.dp)
                                                 .alpha(if (selected) 1f else 0.6f)
                         )
                         Spacer(modifier = Modifier.height(3.dp))
